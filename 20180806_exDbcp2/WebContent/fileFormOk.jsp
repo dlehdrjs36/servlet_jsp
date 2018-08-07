@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//단순한 단일파일 업로드.
 	String path = request.getRealPath("updownFile");
 
 	int size = 1024 * 1024 * 10; // 파일 최대사이즈 10M 까지 가능. 
