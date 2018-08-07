@@ -8,10 +8,11 @@
 </head>
 <body>
 
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
+	${10}<br />
+	${99.99}<br />
+	<%= 99.00 %><br />
+	${"ABC"}<br />
+	${true}<br />
 
 </body>
 </html>

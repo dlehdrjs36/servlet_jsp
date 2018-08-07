@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,11 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
+  <!-- <%
+  	Enumeration<String> list = request.getHeaderNames();
+  	while ( list.hasMoreElements()) {
+  		String key = list.nextElement();
+  		out.print("<br>" + key + " : " + request.getHeader(key));
+  	}
+  	%> -->
+  	
+  	<!--  위의 코드와 결과 같음. -->
+  	${header}
 
 </body>
 </html>

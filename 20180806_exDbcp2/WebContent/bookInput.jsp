@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Book Input</title>
 </head>
 <body>
-
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
-
+<form action="example22.jsp" method="post">
+	책제목 : <input type="text" name="title"><br>
+	책저자 : <input type="text" name="author"><br>
+	출판사 : <input type="text" name="publisher"><br>
+	<input type="submit" value="등록" >
+</form>
 </body>
 </html>

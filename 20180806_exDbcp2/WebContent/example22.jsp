@@ -7,11 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:useBean id="book" class="com.edu.beans.BookBean" />
+	<jsp:setProperty property="*" name="book" />
+	
+	<%
+		request.setAttribute("book", book);
+	%>
 
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
-
+	<jsp:forward page="bookOutput.jsp" />
+	
+	
 </body>
 </html>

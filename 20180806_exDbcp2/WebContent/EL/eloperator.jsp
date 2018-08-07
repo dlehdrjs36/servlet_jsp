@@ -7,11 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
-
+	
+	${ 1+2 } <br />
+	${ 1-2 } <br />
+	${ 1*2 } <br />
+	${ 1/2 } <br />
+	${ 1>2 } <br />
+	${ 1<2 } <br />
+	${ (1>2) ? 1 : 2 } <br />
+	${ (1>2) || (1<2) } <br />
+	
 </body>
 </html>

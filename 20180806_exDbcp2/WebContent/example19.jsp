@@ -4,14 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>EL</title>
 </head>
 <body>
-
-	<form action="fileFormOk.jsp" method="post" enctype="multipart/form-data"> <!-- 파일업로드시 enctype 중요!.기억하기 -->
-		파일 : <input type="file" name="file"><br />
-		<input type="submit" value="File Upload">
-	</form>
-
+<!-- http://localhost:8181/20180806_exDbcp2/example19.jsp?id=guest&pwd=12345 --> 
+ ${ param.id } / ${ param.pwd }		<br> 
+ ${ param["id"] } / ${ param["pwd"] }
+  
+  
 </body>
 </html>
