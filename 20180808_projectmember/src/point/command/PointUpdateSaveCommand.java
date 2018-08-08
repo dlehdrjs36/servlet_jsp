@@ -1,0 +1,29 @@
+package point.command;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import point.dao.PointDao;
+
+public class PointUpdateSaveCommand implements PointCommand {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+
+			String id = request.getParameter("id");
+			String save = request.getParameter("save");
+			int save2 = 0;
+			if(save != null) save2 = Integer.parseInt(save);
+			PointDao dao = new PointDao();
+			
+		
+			dao.UpdateSavePoint( id, save2);
+			
+		
+		
+	}
+
+
+}

@@ -24,10 +24,10 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
-		<tr>
-			<td colspan="5"> <a href="PointInsert.do"> 포인트 추가</a> </td>
-		</tr>
+
 	</table>
-	
+	 <a href="PointUpdateSaveView.do"> 포인트 적립</a>
+	 <a href="PointUpdateUseView.do"> 포인트 사용</a> 
+	 <a href="PointHistory.do"> 포인트 이력보기</a> 
 </body>
 </html>

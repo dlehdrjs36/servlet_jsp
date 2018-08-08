@@ -1,6 +1,7 @@
 package point_frontcontroller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,43 +11,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import point.command.PointCommand;
-import point.command.PointInsertCommand;
+
 import point.command.PointListCommand;
+import point.command.PointUpdateSaveCommand;
 
 
 
-/**
- * Servlet implementation class PointFrontController
- */
 @WebServlet("*.do")
 public class PointFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+ 
     public PointFrontController() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionDo(request, response);
+		
+			actionDo(request, response);
+	
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionDo(request, response);
+
+			actionDo(request, response);
+		
 	}
 	
-protected void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		 
@@ -54,20 +49,31 @@ protected void actionDo(HttpServletRequest request, HttpServletResponse response
 		PointCommand command = null;
 		
 		String uri = request.getRequestURI(); // uri : www.itworld.co.kr/news/110310
+		System.out.println(uri);
 		String conPath = request.getContextPath(); // conPath ex) uri : www.itworld.co.kr/news/110310 -> contextPath : /news/110310
-		String com = uri.substring(conPath.length()); // uri에서 contextpath를 짜름.
+		System.out.println(conPath);
+		String com = uri.substring(conPath.length()); // uri�뿉�꽌 contextpath瑜� 吏쒕쫫.
+		System.out.println(com);
 		
-		if(com.equals("/PointList.do")) {
+		if (com.equals("/Point/PointUpdateSaveView.do")) {
+			viewPage = "/Point/PointUpdateSave.jsp";
+		}  else	if (com.equals("/Point/PointUpdateUseView.do")) {
+			viewPage = "/Point/PointUpdateUse.jsp";
+		}  else if(com.equals("/Point/PointList.do")) {
 			command = new PointListCommand();
 			command.execute(request, response);
-			viewPage = "PointList.jsp";
-		} else if(com.equals("/PointInsert.do")) {
-			command = new PointInsertCommand();
+			viewPage = "/Point/PointList.jsp";
+		}  else if(com.equals("/Point/PointUpdateSave.do")) {
+			command = new PointUpdateSaveCommand();
 			command.execute(request, response);
-			viewPage = "PointList.jsp";
+			viewPage = "/Point/PointList.do";
+		}  else if(com.equals("/Point/PointUpdateUse.do")) {
+			command = new PointUpdateSaveCommand();
+			command.execute(request, response);
+			viewPage = "/Point/PointList.do";
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage); // viewPage를 담아서 디스패처에게 일을 위임함.
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage); // viewPage瑜� �떞�븘�꽌 �뵒�뒪�뙣泥섏뿉寃� �씪�쓣 �쐞�엫�븿.
 		dispatcher.forward(request, response);
 		
 	}

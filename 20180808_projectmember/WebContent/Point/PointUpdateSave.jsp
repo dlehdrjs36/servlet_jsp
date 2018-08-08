@@ -8,17 +8,24 @@
 </head>
 <body>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
-		<form action="PointInsert.do" method="post">
-		<tr>
+		<form action="PointUpdateSave.do" method="post">
+			<tr>
 				<td> ID </td>
 				<td> <input type="text" name="id" size = "50"> </td>
 			</tr>
 			<tr>
 				<td> 적립할 Point </td>
-				<td> <input type="text" name="save" size = "50"> </td>
+				<td> <input type="text" name="save" size ="50"> </td>
+			
+			</tr>		
+			<tr>
+			<td colspan="2"> <input type="submit" value="등록"></td>
 			</tr>
-			<input type="submit" value="등록">
 		</form>
 	</table>
+				
+				
+			    <a href="PointList.do">목록보기</a>
+				
 </body>
 </html>
