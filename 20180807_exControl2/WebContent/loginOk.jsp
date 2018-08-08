@@ -1,5 +1,5 @@
-<%@page import="com.javalec.ex.MemberDto"%>
-<%@page import="com.javalec.ex.MemberDao"%>
+<%@page import="com.javalec.ex.frontcontroller.MemberDto"%>
+<%@page import="com.javalec.ex.frontcontroller.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%

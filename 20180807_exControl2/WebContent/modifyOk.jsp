@@ -1,9 +1,11 @@
-<%@page import="com.javalec.ex.MemberDao"%>
+<%@page import="com.javalec.ex.frontcontroller.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<% request.setCharacterEncoding("EUC-KR"); %>
+<%
+	request.setCharacterEncoding("EUC-KR");
+%>
 
-<jsp:useBean id="dto" class="com.javalec.ex.MemberDto" scope="page" />
+<jsp:useBean id="dto" class="com.javalec.ex.frontcontroller.MemberDto" scope="page" />
 <jsp:setProperty name="dto" property="*" />
 
 <%

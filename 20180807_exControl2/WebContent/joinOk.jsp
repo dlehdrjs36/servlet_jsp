@@ -1,9 +1,11 @@
 <%@page import="java.sql.Timestamp"%>
-<%@page import="com.javalec.ex.*"%>
+<%@page import="com.javalec.ex.frontcontroller.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<% request.setCharacterEncoding("EUC-KR"); %>
-<jsp:useBean id="dto" class="com.javalec.ex.MemberDto"/>
+<%
+	request.setCharacterEncoding("EUC-KR");
+%>
+<jsp:useBean id="dto" class="com.javalec.ex.frontcontroller.MemberDto"/>
 <jsp:setProperty name="dto" property="*" />
 <%
 		dto.setrDate(new Timestamp(System.currentTimeMillis()));
