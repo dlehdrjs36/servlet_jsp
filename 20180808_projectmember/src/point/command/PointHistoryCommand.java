@@ -18,14 +18,7 @@ public class PointHistoryCommand implements PointCommand {
 		ArrayList<PointHistoryDto> dtos = dao.PointHistory();
 		request.setAttribute("PointHistory", dtos);	
 		
-		// 페이징 테스트용 
-		int count = dao.PointPagingCount();
-		request.setAttribute("count", count);
 		
 	} 
-	
-	
-	
-	
 	
 }

@@ -41,7 +41,7 @@ public class PointDao {
 		}
 	}
 	
-	//토탈포인트가 -가안되게하는법 고민하기 0밑으로안내려가게 예외처리;
+
 	// 포인트 추가
 	public void UpdateSavePoint(String id, int save)  {
 		// TODO Auto-generated method stub
@@ -126,8 +126,9 @@ public class PointDao {
 			connection.commit();
 			}
 			else if ( total_point < 0) {
-				point.command.PointUpdateUseCommand.error_code = 1;
 				connection.rollback();
+				point.command.PointUpdateUseCommand.error_code = 1;
+				
 			}
 		}
 		catch (SQLException sqle) {
@@ -315,8 +316,8 @@ public class PointDao {
 		return dtos;
         
 	}
-	// 페이징을 위한 검색
-public int PointPagingCount() {
+	// 페이징을 위한 검색, 글의 갯수 구하기.
+public int PointTotalCount() {
 		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -345,4 +346,51 @@ public int PointPagingCount() {
 		}
 		return totalCount;
 	}
+	//글 목록 보기 20개씩 가져오게하고싶음. 가져옴.
+public ArrayList<PointHistoryDto> PointGetList(int startRow, int endRow) {
+	
+	ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+	PointHistoryDto dto = null;
+    try {
+    	connection = dataSource.getConnection();	
+       
+      String sql = "select * from (SELECT * FROM ( SELECT rownum rnum,id,point,flag,p_date FROM point_history ) pointhistory where rnum <= ? ) where rnum >= ?";
+
+
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, endRow);
+      preparedStatement.setInt(2, startRow);
+      resultSet = preparedStatement.executeQuery();
+        
+      while(resultSet.next()) {
+    	  
+		dto = new PointHistoryDto();
+		dto.setId(resultSet.getString("id"));
+		dto.setPoint(resultSet.getInt("point"));
+		dto.setFlag(resultSet.getInt("flag"));
+		dto.setP_date(resultSet.getTimestamp("p_date"));
+
+		dtos.add(dto); 
+      }
+       
+    } catch (Exception e){
+      e.printStackTrace();
+    } finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+    }
+    return dtos;
+  }
+
+
+
 }

@@ -17,6 +17,7 @@ import point.command.PointListCommand;
 import point.command.PointSearchListCommand;
 import point.command.PointUpdateSaveCommand;
 import point.command.PointUpdateUseCommand;
+import point.command.test;
 
 
 
@@ -90,7 +91,7 @@ public class PointFrontController extends HttpServlet {
 		
 		//테스트용
 		else if ( com.equals("/Point/Page.do")) {
-			command = new PointHistoryCommand();
+			command = new test();
 			command.execute(request, response);
 			viewPage = "/Point/Page.jsp";
 		}

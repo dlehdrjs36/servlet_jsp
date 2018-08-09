@@ -1,6 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%!
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>테스트</title>
+</head>
+<body>
+<%-- <%!
 	public Integer toInt(String x){
 		int a = 0;
 		try{
@@ -9,6 +17,8 @@
 		return a;
 	}
 %>
+
+
 <% 
 	int pageno = toInt(request.getParameter("pageno"));
 
@@ -73,7 +83,7 @@
 	
 	// [1][2][3].[10]
 	// [11][12]
-%>
+%> --%>
 <table width="500" cellpadding="0" cellspacing="0" border="1">
 		<tr>
 			<td>ID</td>
@@ -81,7 +91,7 @@
 			<td>구분(1:적립, 2사용)</td>
 			<td>날짜</td>
 		</tr>
-		<c:forEach items="${PointHistory}" var="dto">
+		<c:forEach items="${plist}" var="dto">
 		<tr>
 			<td>${dto.id}</td>
 			<td>${dto.point}</td>
@@ -89,9 +99,8 @@
 			<td>${dto.p_date}</td>
 		</tr>
 		</c:forEach>
-
 	</table>
-<%-- 현재 페이지   (pageno)   : <%=pageno%><br />
+ <%-- 현재 페이지   (pageno)   : <%=pageno%><br />
 전체 데이터 수   (total_record) : <%=total_record %><br />
 한페이지 당 레코드 수   (page_per_record_cnt) : <%=page_per_record_cnt %><br />
 한페이지 당 보여줄 페지 번호 수   (group_per_page_cnt) : <%=group_per_page_cnt %><br />
@@ -101,17 +110,18 @@
 레코드 끝 번호    (record_end_no) : <%=record_end_no %><br />
 전체페이지 수     (total_page)  : <%=total_page %><br />
 <hr />
-현재 그룹번호 [1] (group_no):  <%=group_no %><br />
+현재 그룹번호 [1] (group_no):  <%=group_no %> <br />
 현재 그룹 시작 번호(page_sno): <%= page_sno%><br />
 현재 그룹 끝 번호  (page_eno): <%= page_eno%><br />
 이전 페이지 번호   (prev_pageno) <%=prev_pageno%><br /> 
  다음 페이지 번호   (next_pageno) <%=next_pageno%><br /> 
-<hr />--%>
+<hr /> --%>
 
 
+<%--
 <a href="Page.jsp?pageno=1">[맨앞으로]</a>
 <a href="Page.jsp?pageno=<%=prev_pageno%>">[이전]</a> 
-<%for(int i =page_sno;i<=page_eno;i++){%>
+ <%for(int i =page_sno;i<=page_eno;i++){%>
 	<a href="Page.jsp?pageno=<%=i %>">
 		<%if(pageno == i){ %>
 			[<%=i %>]
@@ -119,7 +129,7 @@
 			<%=i %>
 		<%} %>
 	</a> 
-<%--	콤마	 --%>	
+	콤마		
 	<%if(i<page_eno){ %>
 		,
 	<%} %>
@@ -127,3 +137,6 @@
  
 <a href="Page.jsp?pageno=<%=next_pageno%>" >[다음]</a>
 <a href="Page.jsp?pageno=<%=total_page %>">[맨뒤로]</a>
+ --%>
+</body>
+</html>

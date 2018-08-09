@@ -3,7 +3,7 @@ package point.dto;
 
 import java.sql.Timestamp;
 
-public class PointHistoryDto {
+public class PointHistoryDto{
 
 	private String id;
 	private int point;

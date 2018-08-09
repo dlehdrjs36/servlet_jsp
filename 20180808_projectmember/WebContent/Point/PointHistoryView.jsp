@@ -36,6 +36,7 @@
 	 <input type="reset" value="다시작성">
 	 <input type="submit" value="검색">
 	 </form>
+	 <a href="PointList.do"> 목록 보기</a>
 	
  
 
