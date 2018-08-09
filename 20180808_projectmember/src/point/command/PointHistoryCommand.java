@@ -6,16 +6,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import point.dao.PointDao;
-import point.dto.PointDto;
+import point.dto.PointHistoryDto;
 
-public class PointListCommand implements PointCommand {
-	
-	
+
+public class PointHistoryCommand implements PointCommand {
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		PointDao dao = new PointDao();
-		ArrayList<PointDto> dtos = dao.PointList();
-		request.setAttribute("PointList", dtos);	
+		ArrayList<PointHistoryDto> dtos = dao.PointHistory();
+		request.setAttribute("PointHistory", dtos);	
+		
+		// 페이징 테스트용 
+		int count = dao.PointPagingCount();
+		request.setAttribute("count", count);
+		
 	}
+	
+	
+	
+	
+	
 }

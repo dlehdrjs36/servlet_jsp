@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert Point</title>
+<title>포인트 적립</title>
 </head>
 <body>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
@@ -23,9 +23,7 @@
 			</tr>
 		</form>
 	</table>
-				
-				
-			    <a href="PointList.do">목록보기</a>
+  <a href="PointList.do">목록보기</a>
 				
 </body>
 </html>

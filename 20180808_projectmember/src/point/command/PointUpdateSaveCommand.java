@@ -16,14 +16,7 @@ public class PointUpdateSaveCommand implements PointCommand {
 			String save = request.getParameter("save");
 			int save2 = 0;
 			if(save != null) save2 = Integer.parseInt(save);
-			PointDao dao = new PointDao();
-			
-		
-			dao.UpdateSavePoint( id, save2);
-			
-		
-		
+			PointDao dao = new PointDao();	
+			dao.UpdateSavePoint( id, save2);	
 	}
-
-
 }

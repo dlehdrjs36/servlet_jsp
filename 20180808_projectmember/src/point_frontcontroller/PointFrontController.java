@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import point.command.PointCommand;
-
+import point.command.PointHistoryCommand;
+import point.command.PointHistoryDownCommand;
 import point.command.PointListCommand;
+import point.command.PointSearchListCommand;
 import point.command.PointUpdateSaveCommand;
+import point.command.PointUpdateUseCommand;
 
 
 
@@ -63,15 +66,37 @@ public class PointFrontController extends HttpServlet {
 			command = new PointListCommand();
 			command.execute(request, response);
 			viewPage = "/Point/PointList.jsp";
+		}  else if(com.equals("/Point/PointHistory.do")) {
+			command = new PointHistoryCommand();
+			command.execute(request, response);
+			viewPage = "/Point/PointHistory.jsp";
 		}  else if(com.equals("/Point/PointUpdateSave.do")) {
 			command = new PointUpdateSaveCommand();
 			command.execute(request, response);
 			viewPage = "/Point/PointList.do";
 		}  else if(com.equals("/Point/PointUpdateUse.do")) {
-			command = new PointUpdateSaveCommand();
+			command = new PointUpdateUseCommand();
 			command.execute(request, response);
 			viewPage = "/Point/PointList.do";
+		}  else if(com.equals("/Point/PointHistoryDown.do")) {
+			command = new PointHistoryDownCommand();
+			command.execute(request, response);
+			viewPage = "/Point/PointHistory.do";
+		}  else if(com.equals("/Point/PointSearchHistory.do")) {
+			command = new PointSearchListCommand();
+			command.execute(request, response);
+			viewPage = "/Point/PointHistory.jsp";
+		}  
+		
+		//테스트용
+		else if ( com.equals("/Point/Page.do")) {
+			command = new PointHistoryCommand();
+			command.execute(request, response);
+			viewPage = "/Point/Page.jsp";
 		}
+		
+		
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage); // viewPage瑜� �떞�븘�꽌 �뵒�뒪�뙣泥섏뿉寃� �씪�쓣 �쐞�엫�븿.
 		dispatcher.forward(request, response);

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>포인트 리스트</title>
 </head>
 <body>
 	
@@ -28,6 +28,7 @@
 	</table>
 	 <a href="PointUpdateSaveView.do"> 포인트 적립</a>
 	 <a href="PointUpdateUseView.do"> 포인트 사용</a> 
-	 <a href="PointHistory.do"> 포인트 이력보기</a> 
+	 <a href="PointHistory.do"> 포인트 이력보기</a>
+	 <a href="Page.do"> 페이징테스트용</a>  
 </body>
 </html>

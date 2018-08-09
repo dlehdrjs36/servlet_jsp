@@ -9,7 +9,7 @@ public class PointDto {
 	
 	public PointDto() {
 		
-	}
+	} 
 	
 	public PointDto( String id, int total_point, int save, int use) {
 		this.id = id;

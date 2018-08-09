@@ -1,19 +1,20 @@
 package point.dto;
 
-import java.sql.Date;
 
-public class PointHistoryDTO {
+import java.sql.Timestamp;
+
+public class PointHistoryDto {
 
 	private String id;
 	private int point;
 	private int flag;
-	private Date p_date;
+	private Timestamp p_date;
 	
-	public PointHistoryDTO() {
-		
+	public PointHistoryDto() {
+		 
 	}
 	
-	public PointHistoryDTO(String id, int point, int flag, Date p_date) {
+	public PointHistoryDto(String id, int point, int flag, Timestamp p_date) {
 		this.id = id;
 		this.point = point;
 		this.flag = flag;
@@ -38,17 +39,13 @@ public class PointHistoryDTO {
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
-	public Date getP_date() {
+
+	public Timestamp getP_date() {
 		return p_date;
 	}
-	public void setP_date(Date p_date) {
+
+	public void setP_date(Timestamp p_date) {
 		this.p_date = p_date;
 	}
-	
-	
-	
-	
-	
-	
 	
 }
