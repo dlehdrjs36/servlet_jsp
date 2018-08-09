@@ -29,7 +29,7 @@
 	 
 	 <form action="PointSearchHistory.do" method="post">
 	 	<select name="subjects"> 
-	 		<option value="1" selected>id</option>
+ 	 		<option value="1" selected>id</option>
 	 		<option value="2" >flag</option>	
 	 	</select>
 	 <input type="text" name="search" size ="20">

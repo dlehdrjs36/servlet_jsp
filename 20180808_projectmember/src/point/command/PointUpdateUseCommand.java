@@ -35,4 +35,4 @@ public class PointUpdateUseCommand implements PointCommand {
 			error_code = 0;
 	}
 
-}
+} 

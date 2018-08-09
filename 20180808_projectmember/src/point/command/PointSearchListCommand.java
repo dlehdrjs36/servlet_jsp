@@ -25,5 +25,5 @@ public class PointSearchListCommand implements PointCommand {
 		ArrayList<PointHistoryDto> dtos = dao.PointSearchList(search, subject);
 		request.setAttribute("PointHistory", dtos);	
 	}
-
+ 
 }

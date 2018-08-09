@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<td> 사용할 Point </td>
-				<td> <input type="text" name="save" size ="50"> </td>
+		 		<td> <input type="text" name="save" size ="50"> </td>
 			
 			</tr>		
 			<tr>

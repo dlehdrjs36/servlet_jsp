@@ -22,7 +22,7 @@ public class PointHistoryCommand implements PointCommand {
 		int count = dao.PointPagingCount();
 		request.setAttribute("count", count);
 		
-	}
+	} 
 	
 	
 	

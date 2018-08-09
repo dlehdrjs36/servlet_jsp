@@ -23,6 +23,6 @@ public class PointHistoryDownCommand implements PointCommand {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 	}
 }

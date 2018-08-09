@@ -9,7 +9,7 @@
 		return a;
 	}
 %>
-<%
+<% 
 	int pageno = toInt(request.getParameter("pageno"));
 
 	if(pageno<1){//현재 페이지

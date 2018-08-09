@@ -19,3 +19,4 @@ public class PointListCommand implements PointCommand {
 		request.setAttribute("PointList", dtos);	
 	}
 }
+ 

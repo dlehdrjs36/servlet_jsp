@@ -24,7 +24,7 @@
 			<td>${dto.p_date}</td>
 		</tr>
 		</c:forEach>
-
+ 
 	</table>
 	 <a href="PointList.do"> 목록 보기</a> <a href="PointHistoryDown.do"> 포인트이력 다운</a>
 	 

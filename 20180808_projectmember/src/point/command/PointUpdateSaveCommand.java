@@ -20,3 +20,4 @@ public class PointUpdateSaveCommand implements PointCommand {
 			dao.UpdateSavePoint( id, save2);	
 	}
 }
+ 

@@ -24,7 +24,7 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
-
+ 
 	</table>
 	 <a href="PointUpdateSaveView.do"> 포인트 적립</a>
 	 <a href="PointUpdateUseView.do"> 포인트 사용</a> 

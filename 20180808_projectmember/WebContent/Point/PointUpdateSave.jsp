@@ -20,7 +20,7 @@
 			</tr>		
 			<tr>
 			<td colspan="2"> <input type="submit" value="등록"></td>
-			</tr>
+	 		</tr>
 		</form>
 	</table>
   <a href="PointList.do">목록보기</a>

@@ -329,7 +329,7 @@ public int PointPagingCount() {
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();		
 			totalCount = resultSet.getInt("count(*)");				
-			
+		 	
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

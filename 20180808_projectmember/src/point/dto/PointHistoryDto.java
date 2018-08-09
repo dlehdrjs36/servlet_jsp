@@ -12,7 +12,7 @@ public class PointHistoryDto {
 	
 	public PointHistoryDto() {
 		 
-	}
+	} 
 	
 	public PointHistoryDto(String id, int point, int flag, Timestamp p_date) {
 		this.id = id;
