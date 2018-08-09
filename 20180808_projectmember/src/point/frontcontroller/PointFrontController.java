@@ -1,4 +1,4 @@
-package point_frontcontroller;
+package point.frontcontroller;
 
 import java.io.IOException;
 import java.sql.SQLException; 
