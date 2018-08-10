@@ -17,6 +17,7 @@ import point.command.PointListCommand;
 import point.command.PointSearchListCommand;
 import point.command.PointUpdateSaveCommand;
 import point.command.PointUpdateUseCommand;
+import point.command.PointUserCommand;
 import point.command.test;
 
 
@@ -87,18 +88,19 @@ public class PointFrontController extends HttpServlet {
 			command = new PointSearchListCommand();
 			command.execute(request, response);
 			viewPage = "/Point/PointHistory.jsp";
+		}   else if(com.equals("/Point/PointUser.do")) {
+			command = new PointUserCommand();
+			command.execute(request, response);
+			viewPage = "/Point/PointUserView.jsp"; 
 		}  
 		
 		//테스트용
-		else if ( com.equals("/Point/Page.do")) {
-			command = new test();
+		else if ( com.equals("/Point/memList.do")) {
+			command = new test(); //페이지처리,리스트출력
 			command.execute(request, response);
 			viewPage = "/Point/Page.jsp";
 		}
-		
-		
-		
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage); // viewPage瑜� �떞�븘�꽌 �뵒�뒪�뙣泥섏뿉寃� �씪�쓣 �쐞�엫�븿.
 		dispatcher.forward(request, response);
 		

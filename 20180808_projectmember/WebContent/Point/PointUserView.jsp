@@ -5,18 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>포인트 리스트</title>
+<title>Insert title here</title>
 </head>
 <body>
-	
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
 		<tr>
 			<td>ID</td>
-			<td>가지고있는 총포인트</td>
-			<td>적립된 포인트</td>
-			<td>사용한 포인트</td>
+			<td>현재 가지고 있는 총포인트</td>
+			<td>지금까지 적립된 포인트</td>
+			<td>지금까지 사용한 포인트</td>
 		</tr>
-		<c:forEach items="${PointList}" var="dto">
+		<c:forEach items="${userpoint}" var="dto">
 		<tr>
 			<td>${dto.id}</td>
 			<td>${dto.total_point}</td>
@@ -24,12 +23,5 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
- 
-	</table>
-	 <a href="PointUpdateSaveView.do"> 포인트 적립</a>
-	 <a href="PointUpdateUseView.do"> 포인트 사용</a> 
-	 <a href="PointHistory.do"> 포인트 이력보기</a>
-	 <a href="Page.do"> 페이징테스트용</a>
-	 <a href="PointUser.do"> 유저포인트확인테스트용</a>    
 </body>
 </html>

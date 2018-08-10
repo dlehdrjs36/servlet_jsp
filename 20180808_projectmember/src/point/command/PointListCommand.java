@@ -9,7 +9,7 @@ import point.dao.PointDao;
 import point.dto.PointDto;
 
 public class PointListCommand implements PointCommand {
-	
+	//관리자가 유저들 포인트확인.
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {

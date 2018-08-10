@@ -203,7 +203,7 @@ public class PointDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String query = "select id, point, flag, p_date from point_history"; 
+			String query = "select id, point, flag, p_date from point_history order by 4 desc"; 
 			preparedStatement = connection.prepareStatement(query);
 			
 			resultSet = preparedStatement.executeQuery();
@@ -215,6 +215,7 @@ public class PointDao {
 				Timestamp p_date = resultSet.getTimestamp("p_date");
 				
 				PointHistoryDto dto = new PointHistoryDto(id, point, flag, p_date);
+				System.out.println(id);
 				dtos.add(dto);
 			}
 			
@@ -316,6 +317,50 @@ public class PointDao {
 		return dtos;
         
 	}
+	// 유저 자기자신의 포인트 확인. 세션아이디를 검색조건으로 주어서 자기자신의 포인트 사용,적립,남은포인트를 알게한다.
+	public ArrayList<PointDto> PointUser( String id ) {
+	 	
+		ArrayList<PointDto> dtos = new ArrayList<PointDto>();
+		PointDto dto = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String query = "select id, total_point, save, use from point where id=?"; 
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1,id);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				dto = new PointDto();
+				dto.setId(resultSet.getString("id"));
+				dto.setTotal_point(resultSet.getInt("total_point"));
+				dto.setSave(resultSet.getInt("save"));
+				dto.setUse(resultSet.getInt("use"));
+				
+				dtos.add(dto);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+	
 	// 페이징을 위한 검색, 글의 갯수 구하기.
 public int PointTotalCount() {
 		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
@@ -346,23 +391,31 @@ public int PointTotalCount() {
 		}
 		return totalCount;
 	}
-	//글 목록 보기 20개씩 가져오게하고싶음. 가져옴.
-public ArrayList<PointHistoryDto> PointGetList(int startRow, int endRow) {
+	//글 목록 보기 15개씩 가져오게하고싶음. 가져옴.
+public ArrayList<PointHistoryDto> PointGetList(int page ) {
 	
 	ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
 	PointHistoryDto dto = null;
+	
+	
+	int startNum = (page-1)*15+1;
+    int endNum = page*15;
+    System.out.println(startNum+"//"+endNum);
+
+
+
     try {
-    	connection = dataSource.getConnection();	
+      connection = dataSource.getConnection();	
        
-      String sql = "select * from (SELECT * FROM ( SELECT rownum rnum,id,point,flag,p_date FROM point_history ) pointhistory where rnum <= ? ) where rnum >= ?";
+      //String sql = "select * from (SELECT * FROM ( SELECT rownum rnum,id,point,flag,p_date FROM point_history order by 5 desc ) pointhistory where rnum <= ?  ) where rnum >= ?";
 
-
+      String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ?  ) B where B.rnum >= ?";
       preparedStatement = connection.prepareStatement(sql);
-      preparedStatement.setInt(1, endRow);
-      preparedStatement.setInt(2, startRow);
+      preparedStatement.setInt(1, endNum);
+      preparedStatement.setInt(2, startNum);
       resultSet = preparedStatement.executeQuery();
         
       while(resultSet.next()) {
@@ -373,9 +426,8 @@ public ArrayList<PointHistoryDto> PointGetList(int startRow, int endRow) {
 		dto.setFlag(resultSet.getInt("flag"));
 		dto.setP_date(resultSet.getTimestamp("p_date"));
 
-		dtos.add(dto); 
-      }
-       
+		dtos.add(dto);	
+      }     
     } catch (Exception e){
       e.printStackTrace();
     } finally {
@@ -390,7 +442,4 @@ public ArrayList<PointHistoryDto> PointGetList(int startRow, int endRow) {
     }
     return dtos;
   }
-
-
-
 }

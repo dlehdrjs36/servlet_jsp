@@ -158,7 +158,7 @@ public class PointPageDto {
         } else {
             this.setNextPageNo(((pageNo + 1) > finalPage ? finalPage : (pageNo + 1))); // 다음 페이지 번호
         }
-                
+        
         //-- 페이징 네비[블록]을 계산
         int startPage = ((pageNo - 1) / pageBlock) * pageBlock + 1; // 시작 페이지 (페이징 네비 기준)
         int endPage = startPage + pageBlock - 1;      // 끝 페이지 (페이징 네비 기준)
