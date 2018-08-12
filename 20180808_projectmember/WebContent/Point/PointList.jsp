@@ -8,7 +8,9 @@
 <title>포인트 리스트</title>
 </head>
 <body>
-	
+	<c:if test="${error==1}">
+		<script>alert('포인트 사용불가. 잔액이 부족해집니다.');</script>
+	</c:if>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
 		<tr>
 			<td>ID</td>
@@ -24,12 +26,27 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
- 
-	</table>
-	 <a href="PointUpdateSaveView.do"> 포인트 적립</a>
-	 <a href="PointUpdateUseView.do"> 포인트 사용</a> 
-	 <a href="PointHistory.do"> 포인트 이력보기</a>
-	 <a href="Page.do"> 페이징테스트용</a>
-	 <a href="PointUser.do"> 유저포인트확인테스트용</a>    
+		</table>
+		
+		<div>
+ 		<jsp:include page="/Point/PointPaging.jsp">
+ 		<jsp:param value="3" name="check"/>
+        <jsp:param value="${paging.page}" name="page"/>
+        <jsp:param value="${paging.beginPage}" name="begin"/>
+        <jsp:param value="${paging.endPage}" name="end"/>
+        <jsp:param value="${paging.prev}" name="prev"/>
+        <jsp:param value="${paging.next}" name="next"/>              
+        <jsp:param value="${paging.prev_pageno}" name="prev_pageno"/>
+        <jsp:param value="${paging.next_pageno}" name="next_pageno"/>
+        <jsp:param value="${paging.totalPage}" name="totalPage"/>
+		</jsp:include>
+		</div>
+		
+	<div>
+	 <a href="PointUpdateSaveView.do"> 회원 포인트 적립</a>
+	 <a href="PointUpdateUseView.do"> 회원 포인트 사용</a> 
+	 <a href="PointHistory.do"> 회원 포인트 이력보기</a>
+	 <a href="PointUser.do"> 유저자기자신포인트확인테스트용</a>
+	 </div>    
 </body>
 </html>

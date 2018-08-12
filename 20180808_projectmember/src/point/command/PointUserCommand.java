@@ -10,12 +10,10 @@ import point.dao.PointDao;
 import point.dto.PointDto;
 
 public class PointUserCommand implements PointCommand {
-
+// 유저 자기자신의 남은포인트 확인.
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
-    	
+		// TODO Auto-generated method stub	
     	
 		PointDao dao = new PointDao();
 		HttpSession session = request.getSession();

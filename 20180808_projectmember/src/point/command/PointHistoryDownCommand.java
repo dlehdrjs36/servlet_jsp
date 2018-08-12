@@ -9,7 +9,7 @@ import jxl.write.WriteException;
 import point.dao.PointDao;
 
 public class PointHistoryDownCommand implements PointCommand {
-
+// 회원 포인트사용이력 다운
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub

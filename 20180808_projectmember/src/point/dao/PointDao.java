@@ -26,6 +26,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import point.dto.PointDto;
 import point.dto.PointHistoryDto;
+import point.dto.PointPagingDto;
 
 public class PointDao {
 	DataSource dataSource;
@@ -39,9 +40,7 @@ public class PointDao {
 			// TODO: handle exception
 			e.printStackTrace(); // 위에서 DB 못찾으면 에러. DB관련해서 작업할때는 try,catch 써주어야함.
 		}
-	}
-	
-
+	}	
 	// 포인트 추가
 	public void UpdateSavePoint(String id, int save)  {
 		// TODO Auto-generated method stub
@@ -83,13 +82,13 @@ public class PointDao {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
-		}
-		
+		}		
 	}
 	// 포인트 사용
-	public void UpdateUsePoint(String id, int use)  {
+	public int UpdateUsePoint(String id, int use)  {
 		// TODO Auto-generated method stub
 		// 적립 flag = 1, 사용 flag = 2
+		int error = 0;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;	
 		ResultSet resultSet = null;
@@ -106,8 +105,7 @@ public class PointDao {
 			preparedStatement.setInt(1, use);
 			preparedStatement.setInt(2, use);
 			preparedStatement.setString(3, id);
-			preparedStatement.executeUpdate();				
-			
+			preparedStatement.executeUpdate();							
 			//
 			preparedStatement = connection.prepareStatement(query3);
 			preparedStatement.setString(1, id);
@@ -115,20 +113,17 @@ public class PointDao {
 			while (resultSet.next()) {
 				total_point = resultSet.getInt("total_point");
 			}
-			// 총포인트가 0보다 작으면 사용불가능. 이전상태로 만듬.
-			
+			// 총포인트가 0보다 작으면 사용불가능. 이전상태로 만듬.			
 			if ( total_point >= 0) {
 			preparedStatement = connection.prepareStatement(query2);
 			preparedStatement.setString(1, id);
 			preparedStatement.setInt(2, use);
 			preparedStatement.executeUpdate();
-
 			connection.commit();
 			}
 			else if ( total_point < 0) {
 				connection.rollback();
-				point.command.PointUpdateUseCommand.error_code = 1;
-				
+				error = 1;				
 			}
 		}
 		catch (SQLException sqle) {
@@ -147,35 +142,29 @@ public class PointDao {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
-		}	
-	}
-	
+		}
+		return error;
+	}	
+	// 전체회원의 포인트 현황을 볼 수 있음.
 	public ArrayList<PointDto> PointList() {
 		
-		ArrayList<PointDto> dtos = new ArrayList<PointDto>();
-		
+		ArrayList<PointDto> dtos = new ArrayList<PointDto>();		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
+		ResultSet resultSet = null;		
 		try {
-			connection = dataSource.getConnection();
-			
+			connection = dataSource.getConnection();			
 			String query = "select id, total_point, save, use from point"; 
-			preparedStatement = connection.prepareStatement(query);
-			
-			resultSet = preparedStatement.executeQuery();
-			
+			preparedStatement = connection.prepareStatement(query);			
+			resultSet = preparedStatement.executeQuery();			
 			while (resultSet.next()) {
 				String id = resultSet.getString("id");
 				int total_point = resultSet.getInt("total_point");
 				int save = resultSet.getInt("save");
-				int use = resultSet.getInt("use");
-				
+				int use = resultSet.getInt("use");				
 				PointDto dto = new PointDto(id, total_point, save, use);
 				dtos.add(dto);
-			}
-			
+			}			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -191,34 +180,27 @@ public class PointDao {
 		}
 		return dtos;
 	}
-	//전체조회
-	public ArrayList<PointHistoryDto> PointHistory() {
+	// 포인트사용이력 전체조회
+	public ArrayList<PointHistoryDto> PointHistoryAllSelect() {
 		
-		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
-		
+		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
+		ResultSet resultSet = null;		
 		try {
-			connection = dataSource.getConnection();
-			
+			connection = dataSource.getConnection();			
 			String query = "select id, point, flag, p_date from point_history order by 4 desc"; 
-			preparedStatement = connection.prepareStatement(query);
-			
-			resultSet = preparedStatement.executeQuery();
-			
+			preparedStatement = connection.prepareStatement(query);			
+			resultSet = preparedStatement.executeQuery();			
 			while (resultSet.next()) {
 				String id = resultSet.getString("id");
 				int point = resultSet.getInt("point");
 				int flag = resultSet.getInt("flag");
-				Timestamp p_date = resultSet.getTimestamp("p_date");
-				
+				Timestamp p_date = resultSet.getTimestamp("p_date");				
 				PointHistoryDto dto = new PointHistoryDto(id, point, flag, p_date);
-				System.out.println(id);
+	
 				dtos.add(dto);
-			}
-			
+			}			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -234,16 +216,15 @@ public class PointDao {
 		}
 		return dtos;
 	}
-
-	// 포인트 이력 엑셀파일로 출력.
+	// 포인트 사용이력 엑셀파일로 출력.
 	public void excelExport() throws IOException, WriteException {
 	// 워크북만들기 -> Sheet 만들기 -> 셀 만들기.
-	WritableWorkbook workbook = Workbook.createWorkbook(new File("new2.xls"));
+	WritableWorkbook workbook = Workbook.createWorkbook(new File("PointHistoryLog.xls"));
 	WritableSheet sheet = workbook.createSheet("PointHistory", 0);
 	WritableCellFormat wcf = new WritableCellFormat();
 	// 셀옵션 설정
 	wcf.setAlignment(Alignment.CENTRE);
-	wcf.setBackground(Colour.GOLD);
+	wcf.setBackground(Colour.GREEN);
 	WritableFont arial10Bold = new WritableFont(WritableFont.ARIAL, 10, WritableFont.BOLD);
 	wcf.setFont(arial10Bold);
 	// 시트에 셀번호,크기설정
@@ -251,100 +232,100 @@ public class PointDao {
 	sheet.setColumnView(1, 20);
 	sheet.setColumnView(2, 20);
 	sheet.setColumnView(3, 20);
-
 	// 셀에 순서대로 Data 삽입
 	sheet.addCell(new Label(0, 0, "id", wcf));
 	sheet.addCell(new Label(1, 0, "point", wcf));
 	sheet.addCell(new Label(2, 0, "flag(적립:1 사용:2)", wcf));
-	sheet.addCell(new Label(3, 0, "date", wcf));
-		
-	List<PointHistoryDto> list = PointHistory();
+	sheet.addCell(new Label(3, 0, "date", wcf));	
+	List<PointHistoryDto> list = PointHistoryAllSelect();
 	int j = 1;
 	for (PointHistoryDto ph : list) {
 	Label lblId = new Label(0, j, ph.getId());
 	Label lblPoint = new Label(1, j, String.valueOf(ph.getPoint()));
 	Label lblFlag = new Label(2, j, String.valueOf(ph.getFlag()));
 	Label lblPdate = new Label(3, j, String.valueOf(ph.getP_date()));
-
 		sheet.addCell(lblId);
 		sheet.addCell(lblPoint);
 		sheet.addCell(lblFlag);
 		sheet.addCell(lblPdate);
 		j++;
-			}
-	
+			}	
 			workbook.write();
 			workbook.close();
 			System.out.println("excel down completed.");
 		}
 	
-	//조건검색
-	public ArrayList<PointHistoryDto> PointSearchList(String search, int subjects) { 
+	public ArrayList<PointHistoryDto> PointSearchList( PointPagingDto pdto, int page) { 
         //초기화작업
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
-		PointHistoryDto dto = null;
-        ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();     	      			
+		ResultSet resultSet = null;		
+        ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();     
+    	PointHistoryDto dto = null;
+    	int startNum = (page-1)*15+1;
+        int endNum = page*15;       
         try {
         	connection = dataSource.getConnection();
         	 //id를 조회하고싶다. 
-        	if( subjects == 1) {
-           	String sql = "select id, point, flag, p_date from point_history where id =?";              	
+        	if( pdto.getSubjects() == 1) {   
+       		String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ? and A.id = ? ) B where B.rnum >= ?";
 			preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
-            preparedStatement.setString(1, search);
+            preparedStatement.setInt(1, endNum);
+            preparedStatement.setString(2, pdto.getSearch());
+            preparedStatement.setInt(3, startNum);      	
         	}
-        	else if ( subjects == 2) {
-        	String sql = "select id, point, flag, p_date from point_history where flag =?";              	
+        	else if ( pdto.getSubjects() == 2) {      
+       		String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ? and A.flag = ? ) B where B.rnum >= ?";
     		preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
-            preparedStatement.setInt(1, Integer.parseInt(search));		
+    		preparedStatement.setInt(1, endNum);
+    		preparedStatement.setInt(2, Integer.parseInt(pdto.getSearch()));
+            preparedStatement.setInt(3, startNum);			      	
         	}	
-			resultSet = preparedStatement.executeQuery(); 		
+        	resultSet = preparedStatement.executeQuery();       	
 			while(resultSet.next()) { 
 				dto = new PointHistoryDto();
 				dto.setId(resultSet.getString("id"));
 				dto.setPoint(resultSet.getInt("point"));
 				dto.setFlag(resultSet.getInt("flag"));
 				dto.setP_date(resultSet.getTimestamp("p_date"));
-
 				dtos.add(dto); 
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
 		}
-		return dtos;
-        
+		return dtos;      
 	}
 	// 유저 자기자신의 포인트 확인. 세션아이디를 검색조건으로 주어서 자기자신의 포인트 사용,적립,남은포인트를 알게한다.
-	public ArrayList<PointDto> PointUser( String id ) {
-	 	
+	public ArrayList<PointDto> PointUser( String id ) {	 	
 		ArrayList<PointDto> dtos = new ArrayList<PointDto>();
 		PointDto dto = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
+		ResultSet resultSet = null;		
 		try {
-			connection = dataSource.getConnection();
-			
+			connection = dataSource.getConnection();			
 			String query = "select id, total_point, save, use from point where id=?"; 
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1,id);
-			
-			resultSet = preparedStatement.executeQuery();
-			
+			preparedStatement.setString(1,id);			
+			resultSet = preparedStatement.executeQuery();			
 			while (resultSet.next()) {
 				dto = new PointDto();
 				dto.setId(resultSet.getString("id"));
 				dto.setTotal_point(resultSet.getInt("total_point"));
 				dto.setSave(resultSet.getInt("save"));
-				dto.setUse(resultSet.getInt("use"));
-				
+				dto.setUse(resultSet.getInt("use"));				
 				dtos.add(dto);
-			}
-			
+			}			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -359,10 +340,9 @@ public class PointDao {
 			}
 		}
 		return dtos;
-	}
-	
-	// 페이징을 위한 검색, 글의 갯수 구하기.
-public int PointTotalCount() {
+	}	
+	// 포인트 사용이력 페이징을 위한 검색, 글의 갯수 구하기.
+public int PointHistoryTotalCount() {
 		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -374,8 +354,7 @@ public int PointTotalCount() {
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();		
-			totalCount = resultSet.getInt("count(*)");				
-		 	
+			totalCount = resultSet.getInt("count(*)");						 	
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -391,41 +370,30 @@ public int PointTotalCount() {
 		}
 		return totalCount;
 	}
-	//글 목록 보기 15개씩 가져오게하고싶음. 가져옴.
-public ArrayList<PointHistoryDto> PointGetList(int page ) {
+	//페이지당 보여줄 데이터 수. 15개씩 가져옴.
+public ArrayList<PointHistoryDto> PointGetPointHistoryList(int page ) {
 	
 	ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
-	PointHistoryDto dto = null;
-	
-	
+	PointHistoryDto dto = null;		
 	int startNum = (page-1)*15+1;
     int endNum = page*15;
-    System.out.println(startNum+"//"+endNum);
-
-
-
+  
     try {
-      connection = dataSource.getConnection();	
-       
-      //String sql = "select * from (SELECT * FROM ( SELECT rownum rnum,id,point,flag,p_date FROM point_history order by 5 desc ) pointhistory where rnum <= ?  ) where rnum >= ?";
-
+      connection = dataSource.getConnection();	      
       String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ?  ) B where B.rnum >= ?";
       preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, endNum);
       preparedStatement.setInt(2, startNum);
-      resultSet = preparedStatement.executeQuery();
-        
-      while(resultSet.next()) {
-    	  
+      resultSet = preparedStatement.executeQuery();       
+      while(resultSet.next()) {    	  
 		dto = new PointHistoryDto();
 		dto.setId(resultSet.getString("id"));
 		dto.setPoint(resultSet.getInt("point"));
 		dto.setFlag(resultSet.getInt("flag"));
 		dto.setP_date(resultSet.getTimestamp("p_date"));
-
 		dtos.add(dto);	
       }     
     } catch (Exception e){
@@ -442,4 +410,108 @@ public ArrayList<PointHistoryDto> PointGetList(int page ) {
     }
     return dtos;
   }
+	// 전체회원을 페이징하기위해서 총데이터 가져오기.
+public int PointListTotalCount() {
+	ArrayList<PointDto> dtos = new ArrayList<PointDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+	int totalCount = 0;
+	try {
+		connection = dataSource.getConnection();		
+		String query = "select count(*) from point"; 
+		preparedStatement = connection.prepareStatement(query);
+		resultSet = preparedStatement.executeQuery();
+		resultSet.next();		
+		totalCount = resultSet.getInt("count(*)");					 	
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	} finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+	return totalCount;
+}
+//
+	public ArrayList<PointDto> PointGetPointList(int page ) {	
+	ArrayList<PointDto> dtos = new ArrayList<PointDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+	PointDto dto = null;		
+	int startNum = (page-1)*15+1;
+    int endNum = page*15;  
+    try {
+      connection = dataSource.getConnection();	      
+      String sql = "select B.rnum, B.id, B.total_point, B.save, B.use from ( SELECT rownum as rnum, A.id, A.total_point, A.save, A.use FROM ( SELECT id, total_point,save,use from point order by 1 ) A where rownum <= ?  ) B where B.rnum >= ?";
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, endNum);
+      preparedStatement.setInt(2, startNum);
+      resultSet = preparedStatement.executeQuery();       
+      while(resultSet.next()) {    	  
+		dto = new PointDto();
+		dto.setId(resultSet.getString("id"));
+		dto.setTotal_point(resultSet.getInt("total_point"));
+		dto.setSave(resultSet.getInt("save"));
+		dto.setUse(resultSet.getInt("use"));
+		dtos.add(dto);	
+      }     
+    } catch (Exception e){
+      e.printStackTrace();
+    } finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+    }
+    return dtos;
+  }
+	// 검색조건들의 총 데이터수 가져옴. 20180811
+	public int PointHistorySearchTotalCount( int subjects, String search) {
+		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int totalCount = 0;
+		try {
+			connection = dataSource.getConnection();		
+			if( subjects == 1) {
+					String sql = "select count(*) from point_history where id = ?";
+					preparedStatement = connection.prepareStatement(sql); 
+		        	preparedStatement.setString(1, search);		        
+		    }
+			else if( subjects == 2) {
+					String sql = "select count(*) from point_history where flag = ?"; 
+					preparedStatement = connection.prepareStatement(sql);
+					preparedStatement.setInt(1,Integer.parseInt(search));											
+			}
+			resultSet = preparedStatement.executeQuery();	
+			resultSet.next();		
+			totalCount = resultSet.getInt("count(*)");			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return totalCount;
+	}
 }

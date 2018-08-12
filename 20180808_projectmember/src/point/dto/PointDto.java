@@ -9,15 +9,13 @@ public class PointDto {
 	
 	public PointDto() {
 		
-	}  
-	
+	}  	
 	public PointDto( String id, int total_point, int save, int use) {
 		this.id = id;
 		this.total_point = total_point;
 		this.save = save;
 		this.use = use;
-	}
-	
+	}	
 	public String getId() {
 		return id;
 	}
