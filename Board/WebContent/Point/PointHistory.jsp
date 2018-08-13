@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>포인트 사용이력</title>
-<script type="text/javascript" src="/20180808_projectmember/js/PointCheck.js"></script>
+<script type="text/javascript" src="/Board/js/PointCheck.js"></script>
 </head>
 <body>
 	<c:if test="${totalcount==0}">

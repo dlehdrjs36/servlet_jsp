@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<script type="text/javascript" src="/20180808_projectmember/js/PointPaging.js"></script>	
+<script type="text/javascript" src="/Board/js/PointPaging.js"></script>	
 <body>
 
  <!-- 1~5까지 있는 페이지의 페이징, PointHistory 페이징처리. -->

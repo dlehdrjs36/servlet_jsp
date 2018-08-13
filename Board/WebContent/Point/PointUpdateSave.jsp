@@ -7,17 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>포인트 적립</title>
+<script type="text/javascript" src="/Board/js/PointCheck.js"></script>
 </head>
 <body>
-	<form action="PointUpdateSave.do" method="post" onsubmit="return checkContent()">
+	<form action="PointUpdateSave.do" method="post" onsubmit="return checkContent2()" name="searchoption">
 		<table width="500" cellpadding="0" cellspacing="0" border="1">
 			<tr>
 				<td> ID </td>
-				<td> <input type="text" name="id" id="id" size = "50"> </td>
+				<td> <input id="id" type="text" name="id" size = "50"> </td>
 			</tr>
 			<tr>
 				<td> 적립할 Point </td>
-				<td> <input type="text" name="save" id="save" size ="50"> </td>		
+				<td> <input id="save" type="text" name="save" size ="50"> </td>		
 			</tr>
 		</table>
 					<input type="submit" value="포인트적립" >	
