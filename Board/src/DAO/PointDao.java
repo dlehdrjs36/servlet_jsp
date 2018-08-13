@@ -29,6 +29,8 @@ import DTO.PointPagingDto;
 
 public class PointDao {
 	DataSource dataSource;	
+	private static int i = 1;
+	
 	public PointDao() {	
 		try {
 			Context context = new InitialContext();
@@ -182,7 +184,22 @@ public class PointDao {
 	// 전체 포인트 사용이력을 엑셀파일로 출력하는 메소드.
 	public void excelExport() throws IOException, WriteException {
 	// 워크북만들기 -> Sheet 만들기 -> 셀 만들기.
-	WritableWorkbook workbook = Workbook.createWorkbook(new File("PointHistoryLog.xls"));
+	// 파일 생성규칙 보완 필요
+	String filename = "C:\\Down\\PointHistoryLog";
+	File f1 = new File("C:\\Down"); // 디렉터리.
+	File f2 = new File("C:\\Down\\PointHistoryLog.xls");
+	if(!f1.exists())  {
+		f1.mkdir();
+	}
+	if(!f2.exists()) {
+		filename = filename+".xls";
+	}
+	else if(f2.exists()) {	
+		filename = filename+i+".xls";
+		i = i+1;
+	}
+	
+	WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
 	WritableSheet sheet = workbook.createSheet("PointHistory", 0);
 	WritableCellFormat wcf = new WritableCellFormat();
 	// 셀옵션 설정
