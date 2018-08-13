@@ -8,6 +8,11 @@
 <title>포인트 리스트</title>
 </head>
 <body>
+
+	<c:if test="${totalcount==0}">
+		<script>alert('존재하지 않는 ID 입니다.');</script>
+	</c:if>
+	
 	<c:if test="${error==1}">
 		<script>alert('포인트 사용불가. 잔액이 부족해집니다.');</script>
 	</c:if>

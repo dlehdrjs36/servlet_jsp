@@ -126,8 +126,6 @@ package DTO;
 	        //글이 32개라면 필요한 페이지는 4개
 	        //32/10 = 3.2 올림해서 4
 	        totalPage = (int)Math.ceil(totalCount/(double)displayRow);            
-	        //System.out.println(totalPage+ " end : " + endPage );
-	        //20180811추가
 	        if(page>totalPage){
 	    		page = totalPage;
 	    	}
@@ -156,8 +154,8 @@ package DTO;
 //			이전 페이지 번호가 1보다 작을 경우		
 	        	prev_pageno=1;
 //			이전 페이지를 1로
-		}
-		if(next_pageno>totalPage){
+	        }
+	        if(next_pageno>totalPage){
 //			다음 페이지가 전체페이지 수보다 클경우		
 			next_pageno=totalPage/displayPage*displayPage+1;
 //			next_pageno=totalpage

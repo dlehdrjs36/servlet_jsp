@@ -1,23 +1,18 @@
 package MemberCommand;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.PointDao;
 import DTO.PointPagingDto;
 import DTO.PointHistoryDto;
-import DTO.PointPagingDto;
 
 public class PointHistoryCommand implements MemberCommand {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub					
+	public void execute(HttpServletRequest request, HttpServletResponse response) {				
 					PointDao dao = new PointDao();
 					
 					int page = 1;
