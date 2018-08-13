@@ -20,7 +20,8 @@
   }
   
   function checkContent2() {
-	  var Rex = /^[1-9]$/;
+	  var Rex = /^[1-9]/;
+	  
   if(document.getElementById("id").value ==""){
 	  alert("ID를 작성해주세요.");
 	  return false;

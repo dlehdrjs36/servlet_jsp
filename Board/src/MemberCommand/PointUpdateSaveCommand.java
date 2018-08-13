@@ -17,7 +17,10 @@ public class PointUpdateSaveCommand implements MemberCommand {
 			int save2 = 0;
 			if(save != null) save2 = Integer.parseInt(save);
 			PointDao dao = new PointDao();	
-			dao.UpdateSavePoint( id, save2);	
+			dao.UpdateSavePoint( id, save2);
+			int totalcount = dao.PointCheck(id);
+			
+     		request.setAttribute("totalcount", totalcount ); // 아이디확인해서 해당하는id잇는지 확인.
 	}
 }
  

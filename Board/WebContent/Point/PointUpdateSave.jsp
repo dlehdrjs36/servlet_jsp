@@ -10,6 +10,10 @@
 <script type="text/javascript" src="/Board/js/PointCheck.js"></script>
 </head>
 <body>
+<c:if test="${totalcount==0}">
+		<script>alert('해당하는 회원이 없습니다.');</script>
+</c:if>
+
 	<form action="PointUpdateSave.do" method="post" onsubmit="return checkContent2()" name="searchoption">
 		<table width="500" cellpadding="0" cellspacing="0" border="1">
 			<tr>

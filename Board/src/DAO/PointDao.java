@@ -526,4 +526,36 @@ public int PointListTotalCount() {
 		}
 		return totalCount;
 	}
+	
+	// 검색조건들의 총 데이터수 가져옴. 20180813
+		public int PointCheck( String id) {
+			ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			int totalCount = 0;
+			try {
+				connection = dataSource.getConnection();		
+				String sql = "select count(*) from member where id = ?"; 
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1,id);											
+				
+				resultSet = preparedStatement.executeQuery();	
+				resultSet.next();		
+				totalCount = resultSet.getInt("count(*)");			
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				try {
+					if(resultSet != null) resultSet.close();
+					if(preparedStatement != null) preparedStatement.close();
+					if(connection != null) connection.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+					e2.printStackTrace();
+				}
+			}
+			return totalCount;
+		}
 }

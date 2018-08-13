@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,6 +9,10 @@
 <script type="text/javascript" src="/Board/js/PointCheck.js"></script>
 </head>
 <body>
+	<c:if test="${totalcount==0}">
+		<script>alert('해당하는 회원이 없습니다.');</script>
+	</c:if>
+	
 	<form action="PointUpdateUse.do" method="post" onsubmit="return checkContent2()" name="searchoption">
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
 			<tr>
