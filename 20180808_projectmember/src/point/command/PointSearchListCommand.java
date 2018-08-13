@@ -17,20 +17,16 @@ public class PointSearchListCommand implements PointCommand {
 		// TODO Auto-generated method stub
 		PointDao dao = new PointDao();
 		int page = 1;
-		int subject = 0;
+		
 		String subjects = request.getParameter("subjects");
 		String search = request.getParameter("search");
-		System.out.println("subject = " + subjects + " search = " + search);
-		
-		if(subjects != null) {
-		subject = Integer.parseInt(subjects);	
-		}		
+		System.out.println("subject = " + subjects + " search = " + search);	
 		//페이징
 		if(request.getParameter("page") !=null){
 	        page = Integer.parseInt(request.getParameter("page"));        
 	    }		    				
 		PointPagingDto paging = new PointPagingDto();
-		paging.setSubjects(subject);
+		paging.setSubjects(subjects);
 		paging.setSearch(request.getParameter("search"));	
 		int totalcount = dao.PointHistorySearchTotalCount(paging.getSubjects(), paging.getSearch());		
         paging.setPage(page);    

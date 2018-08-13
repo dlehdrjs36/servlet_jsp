@@ -267,14 +267,14 @@ public class PointDao {
         try {
         	connection = dataSource.getConnection();
         	 //id를 조회하고싶다. 
-        	if( pdto.getSubjects() == 1) {   
+        	if( pdto.getSubjects().equals("id")) {   
        		String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ? and A.id = ? ) B where B.rnum >= ?";
 			preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
             preparedStatement.setInt(1, endNum);
             preparedStatement.setString(2, pdto.getSearch());
             preparedStatement.setInt(3, startNum);      	
         	}
-        	else if ( pdto.getSubjects() == 2) {      
+        	else if ( pdto.getSubjects().equals("flag")) {      
        		String sql = "select B.rnum, B.id, B.point, B.flag, B.p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point,flag,p_date from point_history order by 4 desc ) A where rownum <= ? and A.flag = ? ) B where B.rnum >= ?";
     		preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
     		preparedStatement.setInt(1, endNum);
@@ -478,7 +478,7 @@ public int PointListTotalCount() {
     return dtos;
   }
 	// 검색조건들의 총 데이터수 가져옴. 20180811
-	public int PointHistorySearchTotalCount( int subjects, String search) {
+	public int PointHistorySearchTotalCount( String subjects, String search) {
 		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -486,12 +486,12 @@ public int PointListTotalCount() {
 		int totalCount = 0;
 		try {
 			connection = dataSource.getConnection();		
-			if( subjects == 1) {
+			if( subjects.equals("id")) {
 					String sql = "select count(*) from point_history where id = ?";
 					preparedStatement = connection.prepareStatement(sql); 
 		        	preparedStatement.setString(1, search);		        
 		    }
-			else if( subjects == 2) {
+			else if( subjects.equals("flag")) {
 					String sql = "select count(*) from point_history where flag = ?"; 
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setInt(1,Integer.parseInt(search));											

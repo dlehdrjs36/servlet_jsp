@@ -42,9 +42,9 @@
  <!-- 1~5까지 있는 페이지의 페이징, PointHistory에서 조건을주어 검색했을때 페이징-->
 <c:if test="${param.check==2}">
 	<c:url var="action" value="/Point/PointSearchHistory.do"/>
-	<a href="${action}?page=1&subjects=${param.subjects}&search=${param.search}" onclick="paging(1,${param.subjects},${param.search}); return false;" >[맨앞으로]</a>
+	<a href="#" onclick="paging(1,'${param.subjects}','${param.search}'); return false;" >[맨앞으로]</a>
 	<c:if test="${param.prev}">
-		<a href="${action}?page=${param.prev_pageno}&subjects=${param.subjects}&search=${param.search}" onclick="paging(${param.prev_pageno},${param.subjects},${param.search}); return false;">[이전]</a>
+		<a href="#" onclick="paging(${param.prev_pageno},'${param.subjects}','${param.search}'); return false;">[이전]</a>
 	</c:if>
 	<c:forEach begin="${param.begin}" end="${param.end}" step="1" var="index">
     	<c:choose>
@@ -52,14 +52,14 @@
             	${index}
         	</c:when>
        		<c:otherwise>
-            	<a href="${action}?page=${index}&subjects=${param.subjects}&search=${param.search}" onclick="paging(${index},${param.subjects},${param.search}); return false;">${index}</a>
+            	<a href="#" onclick="paging(${index},'${param.subjects}','${param.search}'); return false;">${index}</a>
         	</c:otherwise>
     	</c:choose>
 	</c:forEach>
 	<c:if test="${param.next}">
-		<a href="${action}?page=${param.next_pageno}&subjects=${param.subjects}&search=${param.search}" onclick="paging(${param.next_pageno},${param.subjects},${param.search}); return false;">[다음]</a>
+		<a href="#" onclick="paging(${param.next_pageno},'${param.subjects}','${param.search}'); return false;">[다음]</a>
 	</c:if>
-	<a href="${action}?page=${param.totalPage}&subjects=${param.subjects}&search=${param.search}" onclick="paging(${param.totalPage},${param.subjects},${param.search}); return false;">[맨뒤로]</a>
+	<a href="#" onclick="paging(${param.totalPage},'${param.subjects}','${param.search}'); return false;">[맨뒤로]</a>
 </c:if>
 
 

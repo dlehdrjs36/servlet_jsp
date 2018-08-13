@@ -17,7 +17,7 @@ package point.dto;
 	    private int totalPage;
 
 	    private String search;
-	    private int subjects;
+	    private String subjects;
 	    
 	    public String getSearch() {
 			return search;
@@ -25,10 +25,10 @@ package point.dto;
 		public void setSearch(String search) {
 			this.search = search;
 		}
-		public int getSubjects() {
+		public String getSubjects() {
 			return subjects;
 		}
-		public void setSubjects(int subjects) {
+		public void setSubjects(String subjects) {
 			this.subjects = subjects;
 		}
 		public int getTotalPage() {

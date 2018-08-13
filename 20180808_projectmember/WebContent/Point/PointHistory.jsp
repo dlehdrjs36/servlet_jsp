@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>테스트</title>
+<title>포인트 사용이력</title>
 <script type="text/javascript" src="/20180808_projectmember/js/PointCheck.js"></script>
 </head>
 <body>
@@ -70,8 +70,8 @@
 	
 	 <form action="PointSearchHistory.do" method="post" onsubmit="return checkContent()" name="searchoption">
 	 	<select name="subjects" id="subjects" > 
-	 		<option value="1" selected>id</option>
-	 		<option value="2" >flag</option> 				
+	 		<option value="id" selected>id</option>
+	 		<option value="flag" >flag</option> 				
 	 	</select>
 	 <input id="content" type="text" name="search" size ="20">
 	 <input type="reset" value="다시작성">

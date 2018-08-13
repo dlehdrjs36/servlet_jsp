@@ -28,7 +28,7 @@
 		</c:forEach>
 		</table>
 		
-		<div>
+	<div>
  		<jsp:include page="/Point/PointPaging.jsp">
  		<jsp:param value="3" name="check"/>
         <jsp:param value="${paging.page}" name="page"/>
@@ -40,9 +40,9 @@
         <jsp:param value="${paging.next_pageno}" name="next_pageno"/>
         <jsp:param value="${paging.totalPage}" name="totalPage"/>
 		</jsp:include>
-		</div>
+	</div>
 		
-	<div>
+	 <div>
 	 <a href="PointUpdateSaveView.do"> 회원 포인트 적립</a>
 	 <a href="PointUpdateUseView.do"> 회원 포인트 사용</a> 
 	 <a href="PointHistory.do"> 회원 포인트 이력보기</a>

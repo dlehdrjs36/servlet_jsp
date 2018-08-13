@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>자기자신의 포인트 정보 확인</title>
 </head>
 <body>
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
@@ -23,5 +23,6 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
+		<a href="#">되돌아가기</a>
 </body>
 </html>
