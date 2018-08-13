@@ -20,7 +20,7 @@
   }
   
   function checkContent2() {
-	  var Rex = /^[1-9][0-9]+$/g;
+	  var Rex = /^[1-9]+[0-9]*$/g;
 	  
   if(document.getElementById("id").value ==""){
 	  alert("ID를 작성해주세요.");
@@ -42,7 +42,7 @@
   
   
   function checkContent3() {
-	  var Rex = /^[1-9][0-9]+$/g;
+	  var Rex = /^[1-9]+[0-9]*$/g;
 	  
   if(document.getElementById("id").value ==""){
 	  alert("ID를 작성해주세요.");
