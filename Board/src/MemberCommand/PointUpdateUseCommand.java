@@ -16,9 +16,9 @@ public class PointUpdateUseCommand implements MemberCommand {
 		// TODO Auto-generated method stub
 			PrintWriter out;
 			String id = request.getParameter("id");
-			int save = Integer.parseInt(request.getParameter("save"));
+			int use = Integer.parseInt(request.getParameter("use"));
 			PointDao dao = new PointDao();
-			error_code = dao.UpdateUsePoint( id, save);
+			error_code = dao.UpdateUsePoint( id, use);
 			
 			request.setAttribute("error", error_code);		
 	}

@@ -9,16 +9,16 @@
 <title>포인트 사용</title>
 </head>
 <body>
-	<form action="PointUpdateUse.do" method="post">
+	<form action="PointUpdateUse.do" method="post" onsubmit="return checkContent()">
 	<table width="500" cellpadding="0" cellspacing="0" border="1">
 		
 			<tr>
 				<td> ID </td>
-				<td> <input type="text" name="id" size = "50"> </td>
+				<td> <input type="text" name="id" id="id" size = "50"> </td>
 			</tr>
 			<tr>
 				<td> 사용할 Point </td>
-		 		<td> <input type="text" name="save" size ="50"> </td>			
+		 		<td> <input type="text" name="use" id="use" size ="50"> </td>			
 			</tr>		
 	</table>
 	<input type="submit" value="포인트사용">

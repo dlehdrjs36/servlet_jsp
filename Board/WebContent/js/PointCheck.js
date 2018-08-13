@@ -10,7 +10,20 @@
 	  if(document.getElementById("content").value ==""){
 		  alert("검색조건 내용을 작성해주세요.");
 		  return false;
+		 }
+
+	  if(document.getElementById("id").value ==""){
+		  alert("ID를 작성해주세요.");
+		  return false;
 		 }  
+	  if(document.getElementById("save").value ==""){
+		  alert("적립할 포인트를 작성해주세요.");
+		  return false;
+		 }  
+	  if(document.getElementById("use").value ==""){
+		  alert("사용할 포인트를작성해주세요.");
+		  return false;
+		 }
 	  
 	  if( target.options[target.selectedIndex].value=="flag" ) {	
 		  if( !Rex.test(document.searchoption.content.value)) {
