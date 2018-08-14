@@ -19,7 +19,7 @@ body {
 	<script> alert('해당하는 ID의 검색값이 없습니다.'); history.back();</script>
 	</c:if>
 	
-	<table width="500" cellpadding="0" cellspacing="0" border="1">
+	<table width="600" cellpadding="0" cellspacing="0" border="1">
 		<tr>
 			<td>ID</td>
 			<td>포인트</td>

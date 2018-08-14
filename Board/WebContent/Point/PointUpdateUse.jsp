@@ -23,9 +23,11 @@ body {
 			<tr>
 				<td> 사용할 Point </td>
 		 		<td> <input id="use" type="text" name="use" size ="50"> </td>			
+			</tr>	
+			<tr>
+				<td colspan="2" align="right"> <input type="submit" value="포인트사용"></td>
 			</tr>		
 		</table>
-			<input type="submit" value="포인트사용">
 	</form>
 </body>
 </html>

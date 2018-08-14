@@ -4,8 +4,7 @@
 <html>
 <head>
 <style>
-body {
-
+body{
 	background-color: lightblue;
 }
 </style>
@@ -14,7 +13,6 @@ body {
 <script type="text/javascript" src="/Board/js/PointCheck.js"></script>
 </head>
 <body>
-
 	<form action="PointUpdateSave.do" method="post" onsubmit="return checkContent2()" name="searchoption">
 		<table width="500" cellpadding="0" cellspacing="0" border="1">
 			<tr>
@@ -25,9 +23,10 @@ body {
 				<td> 적립할 Point </td>
 				<td> <input id="save" type="text" name="save" size ="50"> </td>		
 			</tr>
-		</table>
-			<input type="submit" value="포인트적립" >	
-	</form>
-					
+			<tr>
+			<td colspan="2" align="right"> <input type="submit" value="포인트적립"></td>
+			</tr>	
+		</table>			
+	</form>	
 </body>
 </html>
