@@ -43,6 +43,10 @@
 			location.href = "PointHistory.do";
 		}
 		//
+		else if (value == "98") // 로그아웃 버튼 클릭시 로그아웃 처리
+		{
+			location.href = "BoardList.bo";
+		}
 		else if (value == "99") // 로그아웃 버튼 클릭시 로그아웃 처리
 		{
 			location.href = "MemberLogout.do";
@@ -78,7 +82,6 @@
 				} else {
 			%>
 			<li class="nav-item"><a class="nav-link" onclick="changeView(3)">내정보보기</a></li>
-			
 			<li class="nav-item"><a class="nav-link" onclick="changeView(4)">포인트확인하기</a></li>
 			<li class="nav-item"><a class="nav-link" onclick="changeView(98)">공지사항</a></li>		
 			<li class="nav-item"><a class="nav-link" onclick="changeView(99)">로그아웃</a></li>

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.PointDao;
-import DTO.PointDto;
 import DTO.PointHistoryDto;
 import DTO.PointPagingDto;
 
@@ -14,25 +13,21 @@ public class PointSearchListCommand implements MemberCommand {
 // 조건을 주어서 회원이력 검색.
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
 		PointDao dao = new PointDao();
 		int page = 1;
-		
 		String subjects = request.getParameter("subjects");
-		String search = request.getParameter("search");
-		System.out.println("subject = " + subjects + " search = " + search);	
+		String search = request.getParameter("search");	
 		//페이징
 		if(request.getParameter("page") !=null){
 	        page = Integer.parseInt(request.getParameter("page"));        
-	    }		    				
+	    }
+		
 		PointPagingDto paging = new PointPagingDto();
 		paging.setSubjects(subjects);
-		paging.setSearch(request.getParameter("search"));	
+		paging.setSearch(search);	
 		int totalcount = dao.PointHistorySearchTotalCount(paging.getSubjects(), paging.getSearch());		
         paging.setPage(page);    
-        paging.setTotalCount(totalcount);
-        System.out.println("page = " + page + " totalcount = " + totalcount);
-             
+        paging.setTotalCount(totalcount);             
         ArrayList<PointHistoryDto> dtos = dao.PointSearchList( paging , page);
 
         request.setAttribute("PointHistory", dtos); // 출력할 데이터

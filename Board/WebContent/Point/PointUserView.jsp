@@ -4,6 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+body {
+
+	background-color: lightblue;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>자기자신의 포인트 정보 확인</title>
 </head>
@@ -23,5 +29,6 @@
 			<td>${dto.use}</td>
 		</tr>
 		</c:forEach>
+	</table>
 </body>
 </html>

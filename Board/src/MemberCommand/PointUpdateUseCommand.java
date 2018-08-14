@@ -1,7 +1,5 @@
 package MemberCommand;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +11,18 @@ public class PointUpdateUseCommand implements MemberCommand {
 	private static int error_code;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-			PrintWriter out;
+
+			PointDao dao = new PointDao();		
 			String id = request.getParameter("id");
-			int use = Integer.parseInt(request.getParameter("use"));
-			PointDao dao = new PointDao();
-			error_code = dao.UpdateUsePoint( id, use);
+			String use = request.getParameter("use");
+			int use2 = 0;
+			int totalcount = dao.PointCheck(id);
 			
-			request.setAttribute("error", error_code);		
+			if(use != null) use2 = Integer.parseInt(use);			
+			if(totalcount !=0 ) error_code = dao.UpdateUsePoint( id, use2); 
+			
+			request.setAttribute("error", error_code);
+			request.setAttribute("totalcount", totalcount ); 
 	}
 
 } 

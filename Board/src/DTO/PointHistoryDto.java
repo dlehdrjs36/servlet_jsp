@@ -1,7 +1,7 @@
 package DTO;
 
 public class PointHistoryDto {
-	//20180813
+
 	private String type;
 	
 	private String id;
@@ -12,7 +12,7 @@ public class PointHistoryDto {
 	public PointHistoryDto() {
 		 
 	} 	
-	public PointHistoryDto(String id, int point, int flag,String type, String p_date) {
+	public PointHistoryDto(String id, int point, int flag, String type, String p_date) {
 		this.id = id;
 		this.point = point;
 		this.flag = flag;

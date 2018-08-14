@@ -8,6 +8,5 @@
 <script type="text/javascript">alert("권한이 없습니다.");history.go(-1); </script>
 </head>
 <body>
-
 </body>
 </html>

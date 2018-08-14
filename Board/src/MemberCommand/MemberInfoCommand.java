@@ -18,5 +18,4 @@ public class MemberInfoCommand implements MemberCommand {
 		MemberBean memberBean = dao.SearchMemberInfo(id);
 		req.setAttribute("memberBean", memberBean);
 	}
-
 }

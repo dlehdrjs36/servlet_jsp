@@ -4,19 +4,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+body {
+
+	background-color: lightblue;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>포인트 리스트</title>
 </head>
 <body>
+
+	<c:if test="${totalcount==0}">
+		<script>alert('존재하지 않는 ID 입니다.');</script>
+	</c:if>
+	
 	<c:if test="${error==1}">
 		<script>alert('포인트 사용불가. 잔액이 부족해집니다.');</script>
 	</c:if>
-	<table width="500" cellpadding="0" cellspacing="0" border="1">
+	<table width="600" cellpadding="0" cellspacing="0" border="1">
 		<tr>
 			<td>ID</td>
 			<td>가지고있는 총포인트</td>
-			<td>적립된 포인트</td>
-			<td>사용한 포인트</td>
+			<td>지금까지 적립된 포인트</td>
+			<td>지금까지 사용한 포인트</td>
 		</tr>
 		<c:forEach items="${PointList}" var="dto">
 		<tr>

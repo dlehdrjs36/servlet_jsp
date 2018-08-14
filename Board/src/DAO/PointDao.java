@@ -28,7 +28,8 @@ import DTO.PointHistoryDto;
 import DTO.PointPagingDto;
 
 public class PointDao {
-	DataSource dataSource;
+	DataSource dataSource;	
+	private static int i = 1;
 	
 	public PointDao() {	
 		try {
@@ -36,20 +37,16 @@ public class PointDao {
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g"); // 톰캣의 context.xml에서 <Resource ~~~ name = "jdbc/Oracle11g" ~~~ />을 찾는 부분임. 커넥션풀 . context.xml과 파싱하는것임.
 			// 커넥션풀은 { server.xml, web.xml, context.xml } 어디에서든지 만들 수 있음. 차례대로 파싱하면서 위의 문장이 있는 곳으로 찾아감. (context.xml)
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace(); // 위에서 DB 못찾으면 에러. DB관련해서 작업할때는 try,catch 써주어야함.
 		}
 	}	
-	// 포인트 추가
+	// 포인트를 적립하면 Update하고 포인트 사용이력에 삽입하기 위한 메소드.
 	public void UpdateSavePoint(String id, int save)  {
-		// TODO Auto-generated method stub
 		// 적립 flag = 1, 사용 flag = 2
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;	
 		try {		
 			String query = "update point set save =save+?, total_point=(?+save)+use where id=?";
-			//String query2 = "insert into point_history ( id, point, flag ) values (?, ?, 1)";
-			//20180813
 			String query2 = "insert into point_history ( id, point, flag ) values (?, ?, 1 )";
 			connection = dataSource.getConnection();
 			connection.setAutoCommit(false);
@@ -58,7 +55,9 @@ public class PointDao {
 			preparedStatement.setInt(1, save);
 			preparedStatement.setInt(2, save);
 			preparedStatement.setString(3, id);
-			preparedStatement.executeUpdate();			
+			preparedStatement.executeUpdate();		
+			//20180813
+			preparedStatement.close();
 			
 			preparedStatement = connection.prepareStatement(query2);
 			preparedStatement.setString(1, id);
@@ -70,8 +69,7 @@ public class PointDao {
 		catch (SQLException sqle) {
 			if(connection!=null) try {connection.rollback();} catch (SQLException eqle) {}
 		}		
-		catch (Exception e) {
-			// TODO: handle exception
+		catch (Exception e) {			
 			e.printStackTrace();
 		}
 		finally {
@@ -80,14 +78,12 @@ public class PointDao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}		
 	}
-	// 포인트 사용
+	// 포인트를 사용하면 Update하고 포인트 사용이력에 삽입하기 위한 메소드.
 	public int UpdateUsePoint(String id, int use)  {
-		// TODO Auto-generated method stub
 		// 적립 flag = 1, 사용 flag = 2
 		int error = 0;
 		Connection connection = null;
@@ -96,8 +92,6 @@ public class PointDao {
 		int total_point = 0;
 		try {		
 			String query = "update point set use=-(-use+?), total_point=-(-use+?)+save where id=?";
-			//String query2 = "insert into point_history ( id, point, flag ) values (?, ?, 2)";
-			//20180813
 			String query2 = "insert into point_history ( id, point, flag ) values (?, ?, 2)";
 			String query3 = "select total_point from point where id=?"; 
 	
@@ -109,7 +103,9 @@ public class PointDao {
 			preparedStatement.setInt(2, use);
 			preparedStatement.setString(3, id);
 			preparedStatement.executeUpdate();							
-			//
+			//20180813
+			preparedStatement.close();
+			
 			preparedStatement = connection.prepareStatement(query3);
 			preparedStatement.setString(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -117,14 +113,17 @@ public class PointDao {
 			while (resultSet.next()) {
 				total_point = resultSet.getInt("total_point");
 			}
-			// 총포인트가 0보다 작으면 사용불가능. 이전상태로 만듬.			
+				
 			if ( total_point >= 0) {
+			//20180813
+			preparedStatement.close();
+			
 			preparedStatement = connection.prepareStatement(query2);
 			preparedStatement.setString(1, id);
 			preparedStatement.setInt(2, use);
 			preparedStatement.executeUpdate();
 			connection.commit();
-			}
+			} 	// 총포인트가 0보다 작으면 사용불가능. 이전상태로 만듬.	
 			else if ( total_point < 0) {
 				connection.rollback();
 				error = 1;				
@@ -134,7 +133,6 @@ public class PointDao {
 			if(connection!=null) try {connection.rollback();} catch (SQLException eqle) {}
 		}		
 		catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		finally {
@@ -143,48 +141,12 @@ public class PointDao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return error;
 	}	
-	// 전체회원의 포인트 현황을 볼 수 있음.
-	public ArrayList<PointDto> PointList() {
-		
-		ArrayList<PointDto> dtos = new ArrayList<PointDto>();		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;		
-		try {
-			connection = dataSource.getConnection();			
-			String query = "select id, total_point, save, use from point"; 
-			preparedStatement = connection.prepareStatement(query);			
-			resultSet = preparedStatement.executeQuery();			
-			while (resultSet.next()) {
-				String id = resultSet.getString("id");
-				int total_point = resultSet.getInt("total_point");
-				int save = resultSet.getInt("save");
-				int use = resultSet.getInt("use");				
-				PointDto dto = new PointDto(id, total_point, save, use);
-				dtos.add(dto);
-			}			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		} finally {
-			try {
-				if(resultSet != null) resultSet.close();
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
-		return dtos;
-	}
-	// 포인트사용이력 전체조회
+	// 포인트사용이력 전체조회하는 메소드.
 	public ArrayList<PointHistoryDto> PointHistoryAllSelect() {
 		
 		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();		
@@ -193,7 +155,6 @@ public class PointDao {
 		ResultSet resultSet = null;		
 		try {
 			connection = dataSource.getConnection();	
-			//20180813
 			String query = "select id, point, flag, CASE WHEN FLAG=1 THEN '적립' WHEN FLAG=2 THEN '사용' END AS type , to_char(p_date, 'yyyy-MM-dd HH:mi') as p_date from point_history order by 5 desc";
 			preparedStatement = connection.prepareStatement(query);			
 			resultSet = preparedStatement.executeQuery();			
@@ -208,7 +169,6 @@ public class PointDao {
 				dtos.add(dto);
 			}			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
@@ -216,16 +176,30 @@ public class PointDao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return dtos;
 	}
-	// 포인트 사용이력 엑셀파일로 출력.
+	// 전체 포인트 사용이력을 엑셀파일로 출력하는 메소드.
 	public void excelExport() throws IOException, WriteException {
 	// 워크북만들기 -> Sheet 만들기 -> 셀 만들기.
-	WritableWorkbook workbook = Workbook.createWorkbook(new File("PointHistoryLog.xls"));
+	// 파일 생성규칙 보완 필요
+	String filename = "C:\\Down\\PointHistoryLog";
+	File f1 = new File("C:\\Down"); // 디렉터리.
+	File f2 = new File("C:\\Down\\PointHistoryLog.xls");
+	if(!f1.exists())  {
+		f1.mkdir();
+	}
+	if(!f2.exists()) {
+		filename = filename+".xls";
+	}
+	else if(f2.exists()) {	
+		filename = filename+i+".xls";
+		i = i+1;
+	}
+	
+	WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
 	WritableSheet sheet = workbook.createSheet("PointHistory", 0);
 	WritableCellFormat wcf = new WritableCellFormat();
 	// 셀옵션 설정
@@ -265,8 +239,8 @@ public class PointDao {
 			System.out.println("excel down completed.");
 		}
 	
+	// 특정조건을 주어 검색한 결과만 포인트 사용이력 목록으로 보여주기위한 메소드.
 	public ArrayList<PointHistoryDto> PointSearchList( PointPagingDto pdto, int page) { 
-        //초기화작업
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;		
@@ -275,8 +249,7 @@ public class PointDao {
     	int startNum = (page-1)*15+1;
         int endNum = page*15;       
         try {
-        	connection = dataSource.getConnection();
-        	 //id를 조회하고싶다. 
+        	connection = dataSource.getConnection();     
         	if( pdto.getSubjects().equals("id")) {   
        		String sql = "select B.rnum, B.id, B.point, B.flag, CASE WHEN FLAG=1 THEN '적립' WHEN FLAG=2 THEN '사용' END AS type, TO_CHAR(B.p_date, 'yyyy-MM-dd HH:mi') as p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point, flag, p_date from point_history order by 4 desc ) A where rownum <= ? and A.id = ? ) B where B.rnum >= ?";
 			preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
@@ -285,7 +258,7 @@ public class PointDao {
             preparedStatement.setInt(3, startNum);      	
         	}
         	else if ( pdto.getSubjects().equals("flag")) {      
-       		String sql = "select B.rnum, B.id, B.point, B.flag, CASE WHEN FLAG=1 THEN '적립' WHEN FLAG=2 THEN '사용' END AS type , TO_CHAR(B.p_date, 'yyyy-MM-dd HH:mi') as p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point, flag, p_date from point_history order by 4 desc ) A where rownum <= ? and A.flag = ? ) B where B.rnum >= ?";
+       		String sql = "select B.rnum, B.id, B.point, B.flag, CASE WHEN FLAG=1 THEN '적립' WHEN FLAG=2 THEN '사용' END AS type , TO_CHAR(B.p_date, 'yyyy-MM-dd HH:mi') as p_date from ( SELECT rownum as rnum, A.id, A.point, A.flag, A.p_date FROM ( SELECT id, point, flag, p_date from point_history order by 1 asc, 4 desc ) A where rownum <= ? and A.flag = ? ) B where B.rnum >= ?";
     		preparedStatement = connection.prepareStatement(sql); // sql명령문 담아둠
     		preparedStatement.setInt(1, endNum);
     		preparedStatement.setInt(2, Integer.parseInt(pdto.getSearch()));
@@ -302,7 +275,6 @@ public class PointDao {
 				dtos.add(dto); 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			try {
@@ -310,13 +282,12 @@ public class PointDao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return dtos;      
 	}
-	// 유저 자기자신의 포인트 확인. 세션아이디를 검색조건으로 주어서 자기자신의 포인트 사용,적립,남은포인트를 알게한다.
+	// 사용자 자신의 포인트 확인할 수 있게 데이터를 가져오는 메소드.
 	public ArrayList<PointDto> PointUser( String id ) {	 	
 		ArrayList<PointDto> dtos = new ArrayList<PointDto>();
 		PointDto dto = null;
@@ -338,7 +309,6 @@ public class PointDao {
 				dtos.add(dto);
 			}			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
@@ -346,15 +316,13 @@ public class PointDao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return dtos;
 	}	
-	// 포인트 사용이력 페이징을 위한 검색, 글의 갯수 구하기.
+	// 포인트 사용이력 목록을 페이징 처리하기위해서 총 데이터 수를 가져오는 메소드.
 public int PointHistoryTotalCount() {
-		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -367,7 +335,6 @@ public int PointHistoryTotalCount() {
 			resultSet.next();		
 			totalCount = resultSet.getInt("count(*)");						 	
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
@@ -375,13 +342,12 @@ public int PointHistoryTotalCount() {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return totalCount;
 	}
-	//페이지당 보여줄 데이터 수. 15개씩 가져옴.
+	//포인트 사용이력을 가져오는 메소드.
 public ArrayList<PointHistoryDto> PointGetPointHistoryList(int page ) {
 	
 	ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
@@ -416,15 +382,13 @@ public ArrayList<PointHistoryDto> PointGetPointHistoryList(int page ) {
 			if(preparedStatement != null) preparedStatement.close();
 			if(connection != null) connection.close();
 		} catch (Exception e2) {
-			// TODO: handle exception
 			e2.printStackTrace();
 		}
     }
     return dtos;
   }
-	// 전체회원을 페이징하기위해서 총데이터 가져오기.
+	// 전체회원을 목록을 페이징처리하기위해서 총 데이터 수를 가져오는 메소드.
 public int PointListTotalCount() {
-	ArrayList<PointDto> dtos = new ArrayList<PointDto>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
@@ -437,7 +401,6 @@ public int PointListTotalCount() {
 		resultSet.next();		
 		totalCount = resultSet.getInt("count(*)");					 	
 	} catch (Exception e) {
-		// TODO: handle exception
 		e.printStackTrace();
 	} finally {
 		try {
@@ -445,13 +408,12 @@ public int PointListTotalCount() {
 			if(preparedStatement != null) preparedStatement.close();
 			if(connection != null) connection.close();
 		} catch (Exception e2) {
-			// TODO: handle exception
 			e2.printStackTrace();
 		}
 	}
 	return totalCount;
 }
-//
+	// 전체회원 정보를 가져오는 메소드.
 	public ArrayList<PointDto> PointGetPointList(int page ) {	
 	ArrayList<PointDto> dtos = new ArrayList<PointDto>();
 	Connection connection = null;
@@ -462,7 +424,7 @@ public int PointListTotalCount() {
     int endNum = page*15;  
     try {
       connection = dataSource.getConnection();	      
-      String sql = "select B.rnum, B.id, B.total_point, B.save, B.use from ( SELECT rownum as rnum, A.id, A.total_point, A.save, A.use FROM ( SELECT id, total_point,save,use from point order by 1 ) A where rownum <= ?  ) B where B.rnum >= ?";
+      String sql = "select B.rnum, B.id, B.total_point, B.save, B.use from ( SELECT rownum as rnum, A.id, A.total_point, A.save, A.use FROM ( SELECT id, total_point,save,use from point order by 2 desc, 1 asc ) A where rownum <= ?  ) B where B.rnum >= ?";
       preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, endNum);
       preparedStatement.setInt(2, startNum);
@@ -483,15 +445,13 @@ public int PointListTotalCount() {
 			if(preparedStatement != null) preparedStatement.close();
 			if(connection != null) connection.close();
 		} catch (Exception e2) {
-			// TODO: handle exception
 			e2.printStackTrace();
 		}
     }
     return dtos;
   }
-	// 검색조건들의 총 데이터수 가져옴. 20180811
+	// 검색을 햇을때 검색결과(총 데이터수)를 가져오는 메소드.
 	public int PointHistorySearchTotalCount( String subjects, String search) {
-		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -512,7 +472,6 @@ public int PointListTotalCount() {
 			resultSet.next();		
 			totalCount = resultSet.getInt("count(*)");			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
@@ -520,16 +479,13 @@ public int PointListTotalCount() {
 				if(preparedStatement != null) preparedStatement.close();
 				if(connection != null) connection.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
 		return totalCount;
-	}
-	
-	// 검색조건들의 총 데이터수 가져옴. 20180813
+	}	
+	// 포인트적립,사용할려는 ID가 존재하는지 체크하는 메소드
 		public int PointCheck( String id) {
-			ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			ResultSet resultSet = null;
@@ -544,7 +500,6 @@ public int PointListTotalCount() {
 				resultSet.next();		
 				totalCount = resultSet.getInt("count(*)");			
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			} finally {
 				try {
@@ -552,7 +507,6 @@ public int PointListTotalCount() {
 					if(preparedStatement != null) preparedStatement.close();
 					if(connection != null) connection.close();
 				} catch (Exception e2) {
-					// TODO: handle exception
 					e2.printStackTrace();
 				}
 			}

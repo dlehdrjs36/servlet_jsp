@@ -1,2 +1,6 @@
-/MemberCommand/
+/BoardCommand/
+/Common/
 /DAO/
+/DTO/
+/FrontController/
+/MemberCommand/

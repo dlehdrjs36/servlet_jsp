@@ -38,21 +38,16 @@ public class MemberController extends HttpServlet {
 		doAction(request, response);
 	}
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//20180813
 		HttpSession session = request.getSession();
-		String sessionID = (String) session.getAttribute("sessionID");
-		System.out.println(sessionID);
-		//20180813
+		MemberCommand command = null;
 		
 		request.setCharacterEncoding("UTF-8");
+		String sessionID = (String) session.getAttribute("sessionID");
 		String viewPage = null;
-		MemberCommand command = null;
 		String uri = request.getRequestURI();
-		System.out.println(uri);
 		String conPath = request.getContextPath();
-		System.out.println(conPath);
 		String com = uri.substring(conPath.length());
-		System.out.println(com);
+	
 		
 		/*회원 관련 */
 		if(com.equals("/MemberJoinForm.do")) {
@@ -93,22 +88,19 @@ public class MemberController extends HttpServlet {
 			int check=(int) request.getAttribute("check");
 			System.out.println(check);
 			if( check == 1 ) {
-			//20180813	HttpSession session = request.getSession();
 				session = request.getSession();
 		        session.invalidate(); 
 				viewPage = "/MemberLoginForm.do?msg=1";
 			} else if ( check == 0   ) {
 				viewPage = "/MemberCheckPassWordForm.do?msg=1";
 			}
-		}
 		// 유저 자기자신의 포인트 정보 확인.
-		else if(com.equals("/PointUser.do")) { 
+		} else if(com.equals("/PointUser.do")) { 
 			command = new PointUserCommand();
 			command.execute(request, response);
-			viewPage = "MainForm.do?contentPage=/Point/PointUserView.jsp"; 
-		}
+			viewPage = "MainForm.do?contentPage=/Point/PointUserView.jsp";
 		// admin만 수행가능한 메뉴.
-		else if( session.getAttribute("sessionID").equals("admin2")) {
+		} else if( session.getAttribute("sessionID").equals("admin2")) {
 			if(com.equals("/PointList.do")) { // 목록화면.
 				command = new PointListCommand();
 				command.execute(request, response);
@@ -145,12 +137,10 @@ public class MemberController extends HttpServlet {
 				command.execute(request, response);
 				viewPage = "MainForm.do?contentPage=/Point/PointHistory.jsp";
 			}  
-		} 
 		//admin이 아닐경우에접근시도시 권한없다고 뜨게만듬.
-		else {
+		} else {
 				viewPage = "/Point/PointAuthorityCheck.jsp";
-		}
-		
+		}	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.PointDao;
 
 public class PointUpdateSaveCommand implements MemberCommand {
-// 관리자가 유저의 포인트 적립관리.
+// 愿�由ъ옄媛� �쑀���쓽 �룷�씤�듃 �쟻由쎄�由�.
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
+			PointDao dao = new PointDao();	
 			String id = request.getParameter("id");
 			String save = request.getParameter("save");
 			int save2 = 0;
-			if(save != null) save2 = Integer.parseInt(save);
-			PointDao dao = new PointDao();	
-			dao.UpdateSavePoint( id, save2);
-			int totalcount = dao.PointCheck(id);
+			int totalcount = dao.PointCheck(id);			
 			
-     		request.setAttribute("totalcount", totalcount ); // 아이디확인해서 해당하는id잇는지 확인.
+			if(save != null) save2 = Integer.parseInt(save);
+			if(totalcount !=0 ) dao.UpdateSavePoint( id, save2);
+			
+     		request.setAttribute("totalcount", totalcount ); // �븘�씠�뵒�솗�씤�빐�꽌 �빐�떦�븯�뒗id�엲�뒗吏� �솗�씤.
 	}
 }
  

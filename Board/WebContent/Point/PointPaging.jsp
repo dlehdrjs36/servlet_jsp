@@ -36,9 +36,6 @@
 	
 </c:if>
 
-
-
-
  <!-- 1~5까지 있는 페이지의 페이징, PointHistory에서 조건을주어 검색했을때 페이징-->
 <c:if test="${param.check==2}">
 	<c:url var="action" value="/PointSearchHistory.do"/>
@@ -61,9 +58,6 @@
 	</c:if>
 	<a href="#" onclick="paging(${param.totalPage},'${param.subjects}','${param.search}'); return false;">[맨뒤로]</a>
 </c:if>
-
-
-
 
 <!-- 1~5까지 있는 페이지의 페이징, PointList 페이징처리 -->
 <c:if test="${param.check==3}">
@@ -93,7 +87,6 @@
 	<input type="hidden" name="subjects" value="" />
 	<input type="hidden" name="search" value="" />
 </form>
-
 
 </body>
 </html>
