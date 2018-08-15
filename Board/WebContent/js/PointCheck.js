@@ -33,7 +33,7 @@
 	 }  
   if(document.getElementById("save").value !="") {
 	  if( !Rex.test(document.searchoption.save.value)) {
-		  alert("포인트는 숫자만 입력가능합니다.[첫자리는 0보다 큰숫자만]");
+		  alert("포인트는 숫자만 입력가능합니다.[첫자리는 0보다 큰숫자만 입력가능]");
 		  return false;
 	  	}
   }
@@ -55,7 +55,7 @@
 	 }  
   if(document.getElementById("use").value !="") {
 	  if( !Rex.test(document.searchoption.use.value)) {
-		  alert("포인트는 숫자만 입력가능합니다.[첫자리는 0보다 큰숫자만]");
+		  alert("포인트는 숫자만 입력가능합니다.[첫자리는 0보다 큰숫자만 입력가능]");
 		  return false;
 	}
   }
