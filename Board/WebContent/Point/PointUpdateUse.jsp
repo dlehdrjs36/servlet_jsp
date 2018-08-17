@@ -12,20 +12,22 @@ body {
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>포인트 사용</title>
 <script type="text/javascript" src="/Board/js/PointCheck.js"></script>
+<link rel="stylesheet" href="/Board/css/Point.css">
+<link rel="stylesheet" href="/Board/BootStrap/css/bootstrap.css">
 </head>
 <body>	
-	<form action="PointUpdateUse.do" method="post" onsubmit="return checkContent3()" name="searchoption">
-		<table width="500" cellpadding="0" cellspacing="0" border="1">
+	<form action="PointUpdateUse.po" method="post" onsubmit="return checkContent3()" name="searchoption">
+		<table border="1">
 			<tr>
-				<td> ID </td>
-				<td> <input id="id" type="text" name="id" size = "50"> </td>
+				<td class="td1"> ID </td>
+				<td class="td2"> <input id="id" type="text" name="id" size = "50"> </td>
 			</tr>
 			<tr>
-				<td> 사용할 Point </td>
-		 		<td> <input id="use" type="text" name="use" size ="50"> </td>			
+				<td class="td1"> 사용할 Point </td>
+		 		<td class="td2"> <input id="use" type="text" name="use" size ="50"> </td>			
 			</tr>	
 			<tr>
-				<td colspan="2" align="right"> <input type="submit" value="포인트사용"></td>
+				<td class="td-button" colspan="2"> <input class="btn btn-primary btn-xl" type="submit" value="포인트사용"></td>
 			</tr>		
 		</table>
 	</form>

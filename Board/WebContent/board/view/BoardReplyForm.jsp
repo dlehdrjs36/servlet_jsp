@@ -1,14 +1,10 @@
-<%@page import="DTO.BoardBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%
-	BoardBean boardBean= (BoardBean) request.getAttribute("BoardBean");
-%>
-<!DOCTYPE html>
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 작성</title>
+<title>답글달기</title>
 <script type="text/javascript" src="./se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,14 +14,19 @@
 <body>
 	<div style="text-align: center;">
 		<div style="display:inline-block;">
-			<form action="BoardUpdate.bo" method="post" id="frm">
-			
+			<form action="BoardReply.bo" method="post" id="frm">
+			   	<input type="hidden" name="id" value="${sessionScope.sessionID}">
+    			<input type="hidden" name="writenum" value="${board.writeNum}"/>
+	    		<input type="hidden" name="regroup" value="${board.reGroup}"/>
+	    		<input type="hidden" name="relevel" value="${board.reLevel}"/>
+    			<input type="hidden" name="reseq" value="${board.reSequence}"/>
+
 				<div style="border: 3px black solid; width: 850px; padding: 15px;">
 					<div>
 						<div style="text-align: center;">
 							<div style="display: inline-block;">
 							    <div class="form-group">
-									<input type="text" name="subject" class="form-control" placeholder="title" value="<%=boardBean.getSubject()%>" style="width: 766px;" name="subject">
+									<input type="text" name="subject" class="form-control" placeholder="title" style="width: 766px;" name="subject">
 								</div>
 							</div>
 						</div>
@@ -33,7 +34,7 @@
 							<div style="display: inline-block;">
 								<div style="width: 768px;">
 									<textarea name="content" id="smarteditor" rows="10" cols="60" style="width: 766px; height: 350px;">
-									<%=boardBean.getContent()%>
+								
 									</textarea>
 								</div>
 							</div>
@@ -46,10 +47,11 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" name="writenum" value="<%=boardBean.getWriteNum()%>">
+				<input type="hidden" name="writenum">
 			</form>
 		</div>
 	</div>
+	
 	<script>
 		$(function() {
 			//전역변수선언
@@ -83,5 +85,6 @@
 					})
 		})
 	</script>
+	
 </body>
 </html>

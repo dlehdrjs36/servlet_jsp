@@ -1,6 +1,6 @@
 package DTO;
 
-public class PointHistoryDto {
+public class PointHistoryBean {
 
 	private String type;
 	
@@ -9,10 +9,10 @@ public class PointHistoryDto {
 	private int flag;
 	private String p_date;
 		  
-	public PointHistoryDto() {
+	public PointHistoryBean() {
 		 
 	} 	
-	public PointHistoryDto(String id, int point, int flag, String type, String p_date) {
+	public PointHistoryBean(String id, int point, int flag, String type, String p_date) {
 		this.id = id;
 		this.point = point;
 		this.flag = flag;

@@ -1,16 +1,16 @@
 package DTO;
 
-public class PointDto {
+public class PointBean {
 
 	private String id;
 	private int total_point;
 	private int save;
 	private int use;
 	
-	public PointDto() {
+	public PointBean() {
 		
 	}  	
-	public PointDto( String id, int total_point, int save, int use) {
+	public PointBean( String id, int total_point, int save, int use) {
 		this.id = id;
 		this.total_point = total_point;
 		this.save = save;

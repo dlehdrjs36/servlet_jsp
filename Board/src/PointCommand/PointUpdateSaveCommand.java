@@ -1,16 +1,15 @@
-package MemberCommand;
+package PointCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.PointDAO;
 
-import DAO.PointDao;
-
-public class PointUpdateSaveCommand implements MemberCommand {
+public class PointUpdateSaveCommand implements PointCommand {
 // 愿�由ъ옄媛� �쑀���쓽 �룷�씤�듃 �쟻由쎄�由�.
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-			PointDao dao = new PointDao();	
+			PointDAO dao = new PointDAO();	
 			String id = request.getParameter("id");
 			String save = request.getParameter("save");
 			int save2 = 0;

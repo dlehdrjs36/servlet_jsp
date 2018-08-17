@@ -23,15 +23,15 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import DTO.PointDto;
-import DTO.PointHistoryDto;
-import DTO.PointPagingDto;
+import DTO.PointBean;
+import DTO.PointHistoryBean;
+import DTO.PointPagingBean;
 
-public class PointDao {
+public class PointDAO {
 	DataSource dataSource;	
 	private static int i = 1;
 	
-	public PointDao() {	
+	public PointDAO() {	
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g"); // 톰캣의 context.xml에서 <Resource ~~~ name = "jdbc/Oracle11g" ~~~ />을 찾는 부분임. 커넥션풀 . context.xml과 파싱하는것임.
@@ -147,9 +147,9 @@ public class PointDao {
 		return error;
 	}	
 	// 포인트사용이력 전체조회하는 메소드.
-	public ArrayList<PointHistoryDto> PointHistoryAllSelect() {
+	public ArrayList<PointHistoryBean> PointHistoryAllSelect() {
 		
-		ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();		
+		ArrayList<PointHistoryBean> dtos = new ArrayList<PointHistoryBean>();		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;		
@@ -164,7 +164,7 @@ public class PointDao {
 				int flag = resultSet.getInt("flag");
 				String type = resultSet.getString("type");
 				String p_date = resultSet.getString("p_date");				
-				PointHistoryDto dto = new PointHistoryDto(id, point, flag, type, p_date);
+				PointHistoryBean dto = new PointHistoryBean(id, point, flag, type, p_date);
 	
 				dtos.add(dto);
 			}			
@@ -219,9 +219,9 @@ public class PointDao {
 	sheet.addCell(new Label(2, 0, "flag(적립:1 사용:2)", wcf));
 	sheet.addCell(new Label(3, 0, "Type", wcf));
 	sheet.addCell(new Label(4, 0, "date", wcf));	
-	List<PointHistoryDto> list = PointHistoryAllSelect();
+	List<PointHistoryBean> list = PointHistoryAllSelect();
 	int j = 1;
-	for (PointHistoryDto ph : list) {
+	for (PointHistoryBean ph : list) {
 	Label lblId = new Label(0, j, ph.getId());
 	Label lblPoint = new Label(1, j, String.valueOf(ph.getPoint()));
 	Label lblFlag = new Label(2, j, String.valueOf(ph.getFlag()));
@@ -240,12 +240,12 @@ public class PointDao {
 		}
 	
 	// 특정조건을 주어 검색한 결과만 포인트 사용이력 목록으로 보여주기위한 메소드.
-	public ArrayList<PointHistoryDto> PointSearchList( PointPagingDto pdto, int page) { 
+	public ArrayList<PointHistoryBean> PointSearchList( PointPagingBean pdto, int page) { 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;		
-        ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();     
-    	PointHistoryDto dto = null;
+        ArrayList<PointHistoryBean> dtos = new ArrayList<PointHistoryBean>();     
+    	PointHistoryBean dto = null;
     	int startNum = (page-1)*15+1;
         int endNum = page*15;       
         try {
@@ -266,7 +266,7 @@ public class PointDao {
         	}	
         	resultSet = preparedStatement.executeQuery();       	
 			while(resultSet.next()) { 
-				dto = new PointHistoryDto();
+				dto = new PointHistoryBean();
 				dto.setId(resultSet.getString("id"));
 				dto.setPoint(resultSet.getInt("point"));
 				dto.setFlag(resultSet.getInt("flag"));
@@ -288,9 +288,9 @@ public class PointDao {
 		return dtos;      
 	}
 	// 사용자 자신의 포인트 확인할 수 있게 데이터를 가져오는 메소드.
-	public ArrayList<PointDto> PointUser( String id ) {	 	
-		ArrayList<PointDto> dtos = new ArrayList<PointDto>();
-		PointDto dto = null;
+	public ArrayList<PointBean> PointUser( String id ) {	 	
+		ArrayList<PointBean> dtos = new ArrayList<PointBean>();
+		PointBean dto = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;		
@@ -301,7 +301,7 @@ public class PointDao {
 			preparedStatement.setString(1,id);			
 			resultSet = preparedStatement.executeQuery();			
 			while (resultSet.next()) {
-				dto = new PointDto();
+				dto = new PointBean();
 				dto.setId(resultSet.getString("id"));
 				dto.setTotal_point(resultSet.getInt("total_point"));
 				dto.setSave(resultSet.getInt("save"));
@@ -348,13 +348,13 @@ public int PointHistoryTotalCount() {
 		return totalCount;
 	}
 	//포인트 사용이력을 가져오는 메소드.
-public ArrayList<PointHistoryDto> PointGetPointHistoryList(int page ) {
+public ArrayList<PointHistoryBean> PointGetPointHistoryList(int page ) {
 	
-	ArrayList<PointHistoryDto> dtos = new ArrayList<PointHistoryDto>();
+	ArrayList<PointHistoryBean> dtos = new ArrayList<PointHistoryBean>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
-	PointHistoryDto dto = null;		
+	PointHistoryBean dto = null;		
 	int startNum = (page-1)*15+1;
     int endNum = page*15;
   
@@ -366,7 +366,7 @@ public ArrayList<PointHistoryDto> PointGetPointHistoryList(int page ) {
       preparedStatement.setInt(2, startNum);
       resultSet = preparedStatement.executeQuery();       
       while(resultSet.next()) {    	  
-		dto = new PointHistoryDto();
+		dto = new PointHistoryBean();
 		dto.setId(resultSet.getString("id"));
 		dto.setPoint(resultSet.getInt("point"));
 		dto.setFlag(resultSet.getInt("flag"));
@@ -414,12 +414,12 @@ public int PointListTotalCount() {
 	return totalCount;
 }
 	// 전체회원 정보를 가져오는 메소드.
-	public ArrayList<PointDto> PointGetPointList(int page ) {	
-	ArrayList<PointDto> dtos = new ArrayList<PointDto>();
+	public ArrayList<PointBean> PointGetPointList(int page ) {	
+	ArrayList<PointBean> dtos = new ArrayList<PointBean>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
-	PointDto dto = null;		
+	PointBean dto = null;		
 	int startNum = (page-1)*15+1;
     int endNum = page*15;  
     try {
@@ -430,7 +430,7 @@ public int PointListTotalCount() {
       preparedStatement.setInt(2, startNum);
       resultSet = preparedStatement.executeQuery();       
       while(resultSet.next()) {    	  
-		dto = new PointDto();
+		dto = new PointBean();
 		dto.setId(resultSet.getString("id"));
 		dto.setTotal_point(resultSet.getInt("total_point"));
 		dto.setSave(resultSet.getInt("save"));

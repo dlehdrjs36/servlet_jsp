@@ -14,8 +14,7 @@ public class BoardDeleteCommand implements BoardCommand{
 		String id = session.getAttribute("sessionID").toString();
 		
 		int writenum = Integer.parseInt( req.getParameter("writenum").toString());
-		System.out.println("id : "+id );
-		System.out.println("writenum : "+writenum );
+		
 		BoardDAO dao = BoardDAO.getInstance();
 		int msg = dao.deleteBoard(writenum, id);
 		req.setAttribute("msg", msg);

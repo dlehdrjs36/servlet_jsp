@@ -1,6 +1,6 @@
 package DTO;
 
-	public class PointPagingDto {
+	public class PointPagingBean {
 	    private int page=1; //현재 페이지
 	    private int totalCount; //전체 게시글수
 	    private int beginPage;    //출력 시작

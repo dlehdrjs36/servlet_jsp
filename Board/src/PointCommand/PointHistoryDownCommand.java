@@ -1,4 +1,4 @@
-package MemberCommand;
+package PointCommand;
 
 import java.io.IOException;
 
@@ -6,13 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jxl.write.WriteException;
-import DAO.PointDao;
+import DAO.PointDAO;
 
-public class PointHistoryDownCommand implements MemberCommand {
+public class PointHistoryDownCommand implements PointCommand {
 // 회원 포인트사용이력 다운
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {	
-		PointDao dao = new PointDao();
+		PointDAO dao = new PointDAO();
 		try {
 			dao.excelExport();
 		} catch (WriteException e) {

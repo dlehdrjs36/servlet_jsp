@@ -24,23 +24,23 @@
 		//20180813
 		else if (value == "4") 
 		{
-			location.href = "PointUser.do";
+			location.href = "PointUser.po";
 		}
 		else if (value == "5") 
 		{
-			location.href = "PointUpdateSaveView.do";
+			location.href = "PointUpdateSaveView.po";
 		}
 		else if (value == "6") 
 		{
-			location.href = "PointUpdateUseView.do";
+			location.href = "PointUpdateUseView.po";
 		}
 		else if (value == "7") 
 		{
-			location.href = "PointList.do";
+			location.href = "PointList.po";
 		}
 		else if (value == "8") 
 		{
-			location.href = "PointHistory.do";
+			location.href = "PointHistory.po";
 		}
 		//
 		else if (value == "98") // 로그아웃 버튼 클릭시 로그아웃 처리

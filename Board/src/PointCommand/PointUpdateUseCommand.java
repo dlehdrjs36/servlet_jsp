@@ -1,18 +1,18 @@
-package MemberCommand;
+package PointCommand;
 
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.PointDao;
+import DAO.PointDAO;
 
-public class PointUpdateUseCommand implements MemberCommand {
+public class PointUpdateUseCommand implements PointCommand {
 //관리자가 유저의 포인트 사용관리.
 	private static int error_code;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-			PointDao dao = new PointDao();		
+			PointDAO dao = new PointDAO();		
 			String id = request.getParameter("id");
 			String use = request.getParameter("use");
 			int use2 = 0;

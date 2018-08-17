@@ -3,7 +3,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
+
 	List boardList = (List) request.getAttribute("boardlist");
 	int listcount = ((Integer) request.getAttribute("listcount")).intValue();
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
@@ -15,6 +17,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/Board/js/BoardCount.js"></script>
 </head>
 <body>
 	<table border="1">
@@ -31,7 +34,19 @@
 		 %>
 		<tr>
 			<td><%=bean.getWriteNum()%></td>
-			<td><a href="BoardDetail.bo?writenum=<%=bean.getWriteNum()%>"><%=bean.getSubject() %></a></td>
+					
+			<td align="left">
+			 <%	if(bean.getReLevel() > 0) { 
+            		for(int j = 1; j<=bean.getReLevel(); j++){
+            	%>
+            		&nbsp;&nbsp;
+           		 <% }%>
+            		RE :
+             <% }%>
+            	
+			<a href="#" onclick="count(<%=bean.getWriteNum()%>,<%=bean.getReadCount() %>);"> <%=bean.getSubject() %></a>
+			</td>
+			
 			<td><%=bean.getAuthor() %></td>
 			<td><%=bean.getRegDate() %></td>
 			<td><%=bean.getReadCount() %></td>
@@ -85,10 +100,12 @@
     	<tr>
 			<td colspan="5">
 				<div>
-					<select>
-						<option value="author">작성자</option>
-						<option value="title">제목</option>
-					</select> <input type="text"> <input type="button" value="검색">
+				<form action="./BoardSearch.bo" method="get">
+					<select name="subjects">
+						<option>작성자</option>
+						<option>제목</option>
+					</select> <input type="text" name="search"> <input type="submit" value="검색">
+				</form>
 					<%
 					if (session.getAttribute("sessionID").equals("admin2")){
 					%>
@@ -97,6 +114,7 @@
 					<%
 					}
 					%>
+					
 				</div>
 
 			</td>
@@ -110,6 +128,12 @@
      			<script>alert("정상 삭제 되었습니다..")</script>
     <%
     		}
-    %>       	
+    %>    
+		
+<form name="countform" action="./BoardCount.bo" method="post"> 
+	<input type="hidden" name="writenum" value="" />
+	<input type="hidden" name="count" value="" />
+</form>
+		
 </body>
 </html>
