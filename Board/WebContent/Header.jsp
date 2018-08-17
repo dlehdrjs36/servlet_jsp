@@ -65,7 +65,7 @@
 			<li class="nav-item"><a class="nav-link" onclick="changeView(2)">회원가입</a></li>
 			<%
 				// 관리자가로그인 되었을 경우 - 로그아웃, 내정보 버튼을 보여준다.
-				} else if (session.getAttribute("sessionID").equals("admin2")){
+				} else if (session.getAttribute("sessionID").equals("admin")){
 			%>
 			<li class="nav-item"><a class="nav-link" onclick="changeView(3)">내정보보기</a></li>
 			

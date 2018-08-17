@@ -72,7 +72,10 @@ body {
 	 </c:if>
 	 
  <form action="PointSearchHistory.po" method="post" onsubmit="return checkContent()" name="searchoption"> 
-	 			<div class="div-button" align="center"> 
+	<table> 
+		<tr>
+	 		<td> 
+	 			<div class="div-button"> 
 	 				<select name="subjects" id="subjects"> 
 	 					<option value="id" selected>id</option>
 	 					<option value="flag" >flag</option> 				
@@ -82,7 +85,9 @@ body {
 	 				<input class="btn btn-primary btn-xl" type="submit" value="검색" >
 	 				<button class="btn btn-primary btn-xl" type="button" onclick="location.href='PointHistoryDown.po'">전체 포인트 사용이력 다운로드</button>
 	 		 	</div>
-	
+	 		</td>
+		</tr>
+	</table>
 </form>
 	
 	
