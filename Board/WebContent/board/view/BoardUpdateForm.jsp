@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@page import="DTO.BoardBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -47,6 +48,49 @@
 					</div>
 				</div>
 				<input type="hidden" name="writenum" value="<%=boardBean.getWriteNum()%>">
+=======
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>게시글 작성</title>
+<script type="text/javascript" src="./se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div style="text-align: center;">
+		<div style="display:inline-block;">
+			<form action="BoardUpdate.bo" method="post" id="frm">
+				<div style="border: 3px black solid; width: 850px; padding: 15px;">
+					<div>
+						<div style="text-align: center;">
+							<div style="display: inline-block;">
+							    <div class="form-group">
+									<input type="text" class="form-control" placeholder="title" style="width: 766px;" name="subject">
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<div style="display: inline-block;">
+								<div style="width: 768px;">
+									<textarea name="content" id="smarteditor" rows="10" cols="60"	style="width: 766px; height: 350px;"></textarea>
+								</div>
+							</div>
+						</div>
+						<div style="text-align: right">
+							<div style="display: inline-block; padding-top: 15px;">
+								<input type="submit" id="savebutton" class="btn btn-primary  btn-lg" value="작성"> 
+								<input type="button" class="btn btn-primary  btn-lg" onclick="location.href='BoardList.bo'" value="취소">
+							</div>
+						</div>
+					</div>
+				</div>
+>>>>>>> refs/remotes/origin/master
 			</form>
 		</div>
 	</div>

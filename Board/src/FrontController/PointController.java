@@ -47,7 +47,7 @@ public class PointController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "MainForm.do?contentPage=/Point/PointUserView.jsp";
 		// admin만 수행가능한 메뉴.
-		} else if( session.getAttribute("sessionID").equals("admin")) {
+		} else if( session.getAttribute("sessionID").equals("admin2")) {
 			if(com.equals("/PointList.po")) { // 목록화면.
 				command = new PointListCommand();
 				command.execute(request, response);

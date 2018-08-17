@@ -56,12 +56,21 @@
 				System.out.println("aaaa : " + boardBean.getAuthor().toString());
 				if( boardBean.getAuthor().toString().equals(id)){
 			%>
+<<<<<<< HEAD
 				<input type="button" value="수정" onclick="location.href='BoardUpdateForm.bo?writenum=<%=boardBean.getWriteNum()%>'"> 
 				<input type="button" value="삭제" onclick="CheckConfirm()"> 
 			<%
 				}
 			%>
 				<input type="button" value="답글달기" onclick="location.href='BoardReplyForm.bo?writenum=<%=boardBean.getWriteNum()%>'">
+=======
+				<input type="button" value="수정" onclick="location.href='BoardUpdateForm.bo'"> 
+				<input type="button" value="삭제" onclick="CheckConfirm()"> 
+			<%
+				}
+			%>
+				<input type="button" value="답글달기" >
+>>>>>>> refs/remotes/origin/master
 				<input type="button" value="목록으로가기" onclick="location.href='BoardList.bo'">
 			</td>
 		</tr>
