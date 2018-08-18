@@ -11,37 +11,30 @@ import DTO.BoardBean;
 public class BoardReplyCommand implements BoardCommand {
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-	       
+	public void execute(HttpServletRequest req, HttpServletResponse resp) {      
 	        BoardDAO boarddao = BoardDAO.getInstance();
-	        BoardBean boarddata = new BoardBean(); 
-	        int result=0; 
-	         
-	        boarddata.setWriteNum(Integer.parseInt(req.getParameter("writenum"))); 
-	        boarddata.setAuthor(req.getParameter("id")); 
-	        boarddata.setSubject(req.getParameter("subject")); 
-	        boarddata.setContent(req.getParameter("content")); 
-	        boarddata.setReGroup(Integer.parseInt(req.getParameter("regroup"))); 
-	        boarddata.setReLevel(Integer.parseInt(req.getParameter("relevel"))); 
-	        boarddata.setReSequence(Integer.parseInt(req.getParameter("reseq"))); 
+	        BoardBean boarddata = new BoardBean();  
+	        String id = req.getParameter("id");
+	        String subject = req.getParameter("subject");
+	        String content = req.getParameter("content");
+	        int writenum = Integer.parseInt(req.getParameter("writenum"));
+	        int regroup = Integer.parseInt(req.getParameter("regroup"));
+	        int relevel = Integer.parseInt(req.getParameter("relevel"));
+	        int reseq = Integer.parseInt(req.getParameter("reseq"));
+	        boarddata.setWriteNum(writenum); 
+	        boarddata.setAuthor(id); 
+	        boarddata.setSubject(subject); 
+	        boarddata.setContent(content); 
+	        boarddata.setReGroup(regroup); 
+	        boarddata.setReLevel(relevel); 
+	        boarddata.setReSequence(reseq); 
 	         
 	        try {
-				result=boarddao.boardReply(boarddata);
+				boarddao.boardReply(boarddata);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
-			} 
-	        
-	        
-	        if(result==0){ 
-	            System.out.println("답장 실패"); 
-	       //     return null; 
-	        } 
-	        System.out.println("답장 완료"); 
-	         
-	     
-	     //   forward.setPath("./BoardDetailAction.bo?num="+result);         	
+			}              	
 	}
 
 }

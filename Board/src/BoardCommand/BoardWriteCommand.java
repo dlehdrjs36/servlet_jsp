@@ -16,6 +16,7 @@ public class BoardWriteCommand implements BoardCommand{
 		BoardBean bean = new BoardBean();
 		HttpSession session = req.getSession();
 		String id = session.getAttribute("sessionID").toString();
+		System.out.println(id);
 		bean.setAuthor(id);
 		bean.setSubject(req.getParameter("subject"));
 		bean.setContent(req.getParameter("content"));
@@ -23,10 +24,7 @@ public class BoardWriteCommand implements BoardCommand{
 		try {
 			dao.WriteBoard(bean);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}	
 	}
-
 }

@@ -28,7 +28,7 @@ public class BoardSearchCommand implements BoardCommand {
 		if (req.getParameter("page") != null) {
 			page = Integer.parseInt(req.getParameter("page"));
 		}
-		int listcount = dao.BoardSearchTotalCount( subjects, search ); // 검색한 결과의 총리스트 수를 받아옴.
+		int listcount = dao.BoardSearchTotalCount( vo ); // 검색한 결과의 총리스트 수를 받아옴.
 		boardlist = dao.BoardSearchList( vo , page); // 검색 결과 리스트를 받아옴.
 		// 총 페이지 수.
 		int maxpage = (int) ((double) listcount / limit + 0.95); // 0.95를 더해서 올림 처리.

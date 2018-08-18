@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.BoardDAO;
+import DTO.BoardBean;
 
 public class BoardDeleteCommand implements BoardCommand{
 
@@ -14,14 +15,11 @@ public class BoardDeleteCommand implements BoardCommand{
 		String id = session.getAttribute("sessionID").toString();
 		
 		int writenum = Integer.parseInt( req.getParameter("writenum").toString());
-<<<<<<< HEAD
 		
-=======
-		System.out.println("id : "+id );
-		System.out.println("writenum : "+writenum );
->>>>>>> refs/remotes/origin/master
 		BoardDAO dao = BoardDAO.getInstance();
-		int msg = dao.deleteBoard(writenum, id);
+		
+		BoardBean board = dao.getBoardDetail(writenum);
+		int msg = dao.deleteBoard(board, id);
 		req.setAttribute("msg", msg);
 	}
 }
