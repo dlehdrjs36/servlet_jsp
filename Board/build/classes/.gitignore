@@ -1,1 +1,7 @@
 /BoardCommand/
+/Common/
+/DAO/
+/DTO/
+/FrontController/
+/MemberCommand/
+/PointCommand/

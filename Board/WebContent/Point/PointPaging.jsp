@@ -12,8 +12,7 @@
 <link rel="stylesheet" href="/Board/BootStrap/css/bootstrap.css">
 <body>
 
-
- <!-- 1~5까지 있는 페이지의 페이징, PointHistory 페이징처리. -->
+<!-- 1~5까지 있는 페이지의 페이징, PointHistory 페이징처리. -->
 <c:if test="${param.check==1}">
 	<c:url var="action" value="/PointHistory.po"/>
 	<div class="text-center">

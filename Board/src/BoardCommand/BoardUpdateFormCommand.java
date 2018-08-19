@@ -16,5 +16,5 @@ public class BoardUpdateFormCommand implements BoardCommand {
 		BoardBean boardBean = dao.getBoardDetail(writeNum);
 		req.setAttribute("BoardBean", boardBean);	
 	}
- 
+
 }
