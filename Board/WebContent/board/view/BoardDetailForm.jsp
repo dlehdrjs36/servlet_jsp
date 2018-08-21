@@ -11,6 +11,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/Board/css/Board.css">
+<link rel="stylesheet" href="/Board/BootStrap/css/bootstrap.css">
 </head>
 <script type="text/javascript">
 	function CheckConfirm() {
@@ -25,31 +27,31 @@
 <body>
 	<table border="1">
 		<tr>
-			<td>게시글번호</td>
-			<td><%=boardBean.getWriteNum()%></td>
+			<td class="td1">게시글번호</td>
+			<td class="td2"><%=boardBean.getWriteNum()%></td>
 		</tr>
 		<tr>
-			<td>작성자</td>
-			<td><%=boardBean.getAuthor()%></td>
+			<td class="td1">작성자</td>
+			<td class="td2"><%=boardBean.getAuthor()%></td>
 		</tr>
 		<tr>
-			<td>작성일자</td>
-			<td><%=boardBean.getRegDate()%></td>
+			<td class="td1">작성일자</td>
+			<td class="td2"><%=boardBean.getRegDate()%></td>
 		</tr>
 		<tr>
-			<td>조회수</td>
-			<td><%=boardBean.getReadCount()%></td>
+			<td class="td1">조회수</td>
+			<td class="td2"><%=boardBean.getReadCount()%></td>
 		</tr>
 		<tr>
-			<td>제목</td>
-			<td><%=boardBean.getSubject()%></td>
+			<td class="td1">제목</td>
+			<td class="td2"><%=boardBean.getSubject()%></td>
 		</tr>
 		<tr>
-			<td>내용</td>
-			<td><%=boardBean.getContent()%></td>
+			<td class="td1">내용</td>
+			<td class="td2"><%=boardBean.getContent()%></td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td class="td-button" colspan="2">
 			<%
 				String id = request.getSession().getAttribute("sessionID").toString();
 				System.out.println("aaaa : " + id);

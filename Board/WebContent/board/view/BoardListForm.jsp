@@ -17,25 +17,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" href="/Board/css/Board.css">
+<link rel="stylesheet" href="/Board/BootStrap/css/bootstrap.css">
+
 <script type="text/javascript" src="/Board/js/BoardCount.js"></script>
 </head>
 <body>
 	<table border="1">
 		<tr>
-			<td>게시글번호</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일자</td>
-			<td>조회수</td>
+			<td class="td1">게시글번호</td>
+			<td class="td1">제목</td>
+			<td class="td1">작성자</td>
+			<td class="td1">작성일자</td>
+			<td class="td1">조회수</td>
 		</tr>
 		<%
         for(int i = 0 ; i < boardList.size() ; i++){
             BoardBean bean = (BoardBean) boardList.get(i);
 		 %>
 		<tr>
-			<td><%=bean.getWriteNum()%></td>
+			<td class="td2"><%=bean.getWriteNum()%></td>
 					
-			<td align="left">
+			<td class="td2" align="left">
 			 <%	if(bean.getReLevel() > 0) { 
             		for(int j = 1; j<=bean.getReLevel(); j++){
             	%>
@@ -47,38 +51,42 @@
 			<a href="./BoardDetail.bo?writenum=<%=bean.getWriteNum() %>"> <%=bean.getSubject() %></a>
 			</td>
 			
-			<td><%=bean.getAuthor() %></td>
-			<td><%=bean.getRegDate() %></td>
-			<td><%=bean.getReadCount() %></td>
+			<td class="td2"><%=bean.getAuthor() %></td>
+			<td class="td2"><%=bean.getRegDate() %></td>
+			<td class="td2"><%=bean.getReadCount() %></td>
 		</tr>
 		<%
 		} 
 		%>
+	    
 	    <tr align=center height=20>
-    	    <td colspan=5 style=font-family:Tahoma;font-size:10pt;>
+	   
+    	    <td class="td-button" colspan=5 style=font-family:Tahoma;font-size:10pt;>
+    	    <div class="text-center">
+    	    	<ui class="pagination">
         	    <%
             	if(nowpage<=1){ 
             	%>
-            		[이전]&nbsp;
+            		
             	<%
             	}else{ 
             	%>
-            		<a href="./BoardList.bo?page=<%=nowpage-1 %>">[이전]</a>&nbsp;
+            		<li><a href="./BoardList.bo?page=<%=nowpage-1 %>">[이전]</a>&nbsp;</li>
             	<%
             	} 
            		%>
 
             	<%
             	for(int a=startpage;a<=endpage;a++){
-                	if(a==nowpage){
+                	//if(a==nowpage){
             	%>
-            	    	[<%=a %>]
+            	    	<%-- <li>[<%=a %>]</li> --%>
                 <%
-                	}else{ 
+                	//}else{ 
                 %>
-                		<a href="./BoardList.bo?page=<%=a %>">[<%=a %>]</a>&nbsp;
+                		<li><a href="./BoardList.bo?page=<%=a %>">[<%=a %>]</a>&nbsp;</li>
                 <%
-                	} 
+                	//} 
                 %>
             	<%
             	} 
@@ -87,26 +95,28 @@
             	<%
             	if(nowpage>=maxpage){ 
             	%>
-            		[다음]
+            		<li>[다음]</li>
             	<%
              	}else{ 
              	%>
-            		<a href="./BoardList.bo?page=<%=nowpage+1 %>">[다음]</a>
+            		<li><a href="./BoardList.bo?page=<%=nowpage+1 %>">[다음]</a></li>
             	<%
             	} 
             	%>
-        	</td>
+            	</ui>
+            	</div>
+        	</td>  	
     	</tr>
+    	
     	<tr>
-			<td colspan="5">
+			<td class="td-button" colspan="5">
 				<div>
 				<form action="./BoardSearch.bo" method="get">
 					<select name="subjects">
 						<option>작성자</option>
 						<option>제목</option>
 					</select> <input type="text" name="search"> <input type="submit" value="검색">
-				</form>
-					<%
+										<%
 					if (session.getAttribute("sessionID").equals("admin2")){
 					%>
 					<input type="button" value="글작성"
@@ -115,6 +125,8 @@
 					}
 					%>
 					
+				</form>
+
 				</div>
 
 			</td>

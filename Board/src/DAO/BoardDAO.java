@@ -368,7 +368,10 @@ public class BoardDAO {
         int re_seq=board.getReSequence(); //답변글의 순서
         
         String sql ="update board set RE_SEQ = RE_SEQ+1 where RE_GROUP = ? and RE_SEQ > ? ";
-        String sql2="insert into board (WRITE_NUM,AUTHOR,SUBJECT,CONTENT,FILE_NAME,RE_GROUP,RE_LEVEL,RE_SEQ,READ_COUNT,REG_DATE) values( write_num_seq.nextval,?,?,?,?,?,?,?,?,sysdate)"; 
+
+        String sql2="insert into board (WRITE_NUM,AUTHOR,SUBJECT,CONTENT,FILE_NAME,RE_GROUP,RE_LEVEL,RE_SEQ,READ_COUNT,REG_DATE)"
+        		   +"values( write_num_seq.nextval,?,?,?,?,?,?,?,?,sysdate)"; 
+
         try{ 
         	conn = DBConnection.getConnection(); // DB와 연결
         	conn.setAutoCommit(false);

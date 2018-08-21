@@ -25,8 +25,8 @@ public class PointHistoryCommand implements PointCommand {
 		    ArrayList<PointHistoryBean> dtos = dao.PointGetPointHistoryList( page );
 
 		    request.setAttribute("PointHistory", dtos); // 출력할 데이터
-		    request.setAttribute("paging", paging); // 총데이터량을 페이징처리
-		    request.setAttribute("check", 1); // 총데이터량을 페이징처리	
+		    request.setAttribute("paging", paging); // 출력할데이터에 대해서 페이징처리한 객체
+		    request.setAttribute("check", 1); // 출력할 데이터에 대해서 페이징 처리작업 구분을 위한 숫자.	
 			        
 	}
 }

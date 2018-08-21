@@ -1,21 +1,23 @@
 package DTO;
 
 	public class PointPagingBean {
-	    private int page=1; //현재 페이지
+	    private int page=1; 	//현재 페이지
 	    private int totalCount; //전체 게시글수
-	    private int beginPage;    //출력 시작
-	    private int endPage;    //출력 끝
-	    private int displayRow = 15;    //한 페이지에 몇 개 row
-	    private int displayPage = 5;    //화면에서 보여줄 페이지의 목록. 5개씩 보여줌.
-	    boolean prev; //prev 버튼이 보일지/안 보일지
-	    boolean next; //총 페이지 수가 5개 넘는 경우만 true.	     
-	    private int group_no;	 // 현재 그룹
+	    private int beginPage;   //페이지의 시작
+	    private int endPage;    //페이지의 끝
+	    private int displayRow = 15;    //한 페이지에 보여줄 결과값의 수
+	    private int displayPage = 5;    //화면에서 보여줄 페이지의 목록.
+	    boolean prev; //prev 버튼이 보일지/안 보일지            [이전버튼]
+	    boolean next; //총 페이지 수가 5개 넘는 경우만 true. [다음버튼]    
+	    private int group_no;	 // 현재 그룹번호.
 	    private int page_sno;	// 현재그룹에서 페이지의 시작번호
 	    private int page_eno;	// 현재그룹에서 페이지의 끝번호
 	    private int prev_pageno; // 이전페이지
 	    private int next_pageno; // 다음페이지
-	    private int totalPage;
-
+	    private int totalPage;	
+	    
+	    
+	    
 	    private String search;
 	    private String subjects;
 	    
@@ -118,14 +120,13 @@ package DTO;
 		public void setPage_eno(int page_eno) {
 			this.page_eno = page_eno;
 		}
+		//displayPage = 15(고정값)
+        //prev,next,beginPage,endPage 를 계산해서 만든다.	     
+		
 		private void paging(){
-	        //displayPage = 15(고정값)
-	        //prev,next,beginPage,endPage 를 계산해서 만든다.	     
-	    	endPage = ((page+(displayPage-1))/displayPage)*displayPage;
-	        beginPage = endPage - (displayPage-1);	        
-	        //글이 32개라면 필요한 페이지는 4개
-	        //32/10 = 3.2 올림해서 4
-	        totalPage = (int)Math.ceil(totalCount/(double)displayRow);            
+			endPage = ((page+(displayPage-1))/displayPage)*displayPage;
+	        beginPage = endPage - (displayPage-1);	        	        
+	        totalPage = (int)Math.ceil(totalCount/(double)displayRow); 				//글이 32개라면 필요한 페이지는 4개, 32/10 = 3.2 올림해서 4	                    
 	        if(page>totalPage){
 	    		page = totalPage;
 	    	}
@@ -137,30 +138,18 @@ package DTO;
 	        }
 	        prev=(beginPage == 1)? false : true;	        
 	        group_no = page/ displayPage + (page%displayPage>0 ? 1 : 0);
-	        page_eno = group_no*displayPage;
+	        page_eno = group_no*displayPage; 								// 현재 그룹 끝 번호	
 	        page_sno = page_eno-(displayPage-1);	     
-	        if(page_eno>totalPage){
-//	     	   현재 그룹 끝 번호가 전체페이지 수 보다 클 경우		
-	     		page_eno=totalPage;
-//	     	   현재 그룹 끝 번호와 = 전체페이지 수를 같게
+	        if(page_eno>totalPage){	
+	     		page_eno=totalPage; 										// 현재 그룹 끝 번호와 = 전체페이지 수를 같게
 	     	}
-	        prev_pageno = page_sno-displayPage;  // <<  *[이전]* [21],[22],[23]... [30] [다음]  >>
-//			이전 페이지 번호	= 현재 그룹 시작 번호 - 페이지당 보여줄 번호수	
-//		ex)		46		=	51 - 5				
-	        next_pageno = page_sno+displayPage;	// <<  [이전] [21],[22],[23]... [30] *[다음]*  >>
-//			다음 페이지 번호 = 현재 그룹 시작 번호 + 페이지당 보여줄 번호수
-//		ex)		56		=	51 - 5
-	        if(prev_pageno<1){
-//			이전 페이지 번호가 1보다 작을 경우		
+	        prev_pageno = page_sno-displayPage; 						   // <<  *[이전]* [21],[22],[23]... [30] [다음]  >>
+	        next_pageno = page_sno+displayPage;							   // <<  [이전] [21],[22],[23]... [30] *[다음]*  >>
+	        if(prev_pageno<1){										
 	        	prev_pageno=1;
-//			이전 페이지를 1로
 	        }
-	        if(next_pageno>totalPage){
-//			다음 페이지가 전체페이지 수보다 클경우		
-			next_pageno=totalPage/displayPage*displayPage+1;
-//			next_pageno=totalpage
-//			다음 페이지 = 전체페이지수 / 페이지당 보여줄 번호수 * 페이지당 보여줄 번호수 + 1 
-//		ex)			   = 	76 / 5 * 5 + 1	???????? 		
+	        if(next_pageno>totalPage){	
+			next_pageno=totalPage/displayPage*displayPage+1;	
 			}     
 	    }	
 }

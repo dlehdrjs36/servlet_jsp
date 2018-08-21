@@ -19,7 +19,6 @@
 	<div style="text-align: center;">
 		<div style="display:inline-block;">
 			<form action="BoardUpdate.bo" method="post" id="frm">
-			
 				<div style="border: 3px black solid; width: 850px; padding: 15px;">
 					<div>
 						<div style="text-align: center;">
@@ -37,7 +36,7 @@
 									</textarea>
 								</div>
 							</div>
-						</div>
+						</
 						<div style="text-align: right">
 							<div style="display: inline-block; padding-top: 15px;">
 								<input type="submit" id="savebutton" class="btn btn-primary  btn-lg" value="작성"> 
