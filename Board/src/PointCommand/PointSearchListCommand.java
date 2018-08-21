@@ -25,9 +25,8 @@ public class PointSearchListCommand implements PointCommand {
 		PointPagingBean paging = new PointPagingBean();
 		paging.setSubjects(subjects);
 		paging.setSearch(search);	
-		int totalcount = dao.PointHistorySearchTotalCount(paging.getSubjects(), paging.getSearch());
-		System.out.println(totalcount); 
-		paging.setPage(page);    
+		int totalcount = dao.PointHistorySearchTotalCount(paging.getSubjects(), paging.getSearch());		
+        paging.setPage(page);    
         paging.setTotalCount(totalcount);             
         ArrayList<PointHistoryBean> dtos = dao.PointSearchList( paging , page);
 
