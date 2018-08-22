@@ -69,30 +69,25 @@
 				</td>
 			</tr>
 			<tr class="tr-bg">
+			
+			
 				<td class="td1">주소</td>
-				<td class="td2">
-					<div class="div-addr">
-						<input type="text" id="addrnum" name="addrnum">&nbsp;&nbsp;<input
+				
+						<input type="text" id="addrnum" name="addrnum">&nbsp;&nbsp;
+						<input
 							type="button" onclick="SearchPostcode()" value="우편번호검색"
 							class=" btn btn-primary  btn-xs btn1"><br>
-						<div id="layer"
-							style="display: none; position: fixed; overflow: hidden; z-index: 1; -webkit-overflow-scrolling: touch;">
-							<img
-								src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png"
-								id="btnCloseLayer"
-								style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
-								onclick="closeDaumPostcode()" alt="닫기 버튼">
-						</div>
+				
 						<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 						<script src="/Board/js/SearchAddr.js"></script>
-					</div>
-					<div class="div-addr">
+				
+				
 						<input type="text" id="addr" name="addr" class="addr">
-					</div>
-					<div class="div-addr">
+				
+				
 						<input type="text" name="addrdetail" class="addrdetail">
-					</div>
-				</td>
+				
+				
 			</tr>
 			<tr class="tr-bg">
 				<td class="td1">전화번호</td>
