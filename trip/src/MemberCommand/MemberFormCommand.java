@@ -16,14 +16,11 @@ public class MemberFormCommand implements MemberCommand {
 		int pw = Integer.parseInt(request.getParameter("password"));
 		String name = request.getParameter("name");
 		int gender = Integer.parseInt(request.getParameter("gender"));
-		String phone = request.getParameter("phone1") +"-"+request.getParameter("phone2") +"-"+ request.getParameter("phone3");
-		String addr = request.getParameter("postcode")+"-"+request.getParameter("roadAddress")+"-"+request.getParameter("jibunAddress");
-	
-		String email = request.getParameter("email");
-		
-		String guide = request.getParameter("guide");
-		System.out.println(guide);
-	
+		String phone = request.getParameter("phone1") +"-"+request.getParameter("phone2") +"-"+ request.getParameter("phone3");	
+		String addr = request.getParameter("postcode")+"-"+request.getParameter("roadAddress")+"-"+request.getParameter("jibunAddress");	
+		String email = request.getParameter("email");		
+		//String guide = request.getParameter("guide");
+
 		MemberDAO dao = new MemberDAO();
 		MemberBean dto = new MemberBean();
 		dto.setId(id);
@@ -35,9 +32,8 @@ public class MemberFormCommand implements MemberCommand {
 		dto.setEmail(email);
 		
 		check = dao.InsertMember(dto);
-		
+		//가입완료시 1 반환
 		request.setAttribute("check", check);
-		
 		
 	}
 

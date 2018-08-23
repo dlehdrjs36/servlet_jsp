@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import MemberCommand.MemberCommand;
 import MemberCommand.MemberFormCommand;
-
+import MemberCommand.MemberIdCheckCommand;
 
 /**
  * Servlet implementation class MemberControll
@@ -21,43 +21,54 @@ import MemberCommand.MemberFormCommand;
 public class MemberControll extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	public MemberControll() {
+		super();
+	}
 
-public MemberControll() {
-    super();
-}
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	doAction(request, response);
-}
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	doAction(request, response);
-}
-protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	HttpSession session = request.getSession();
-	MemberCommand command = null;
-	
-	request.setCharacterEncoding("UTF-8");
-	String viewPage = null;
-	String uri = request.getRequestURI();
-	System.out.println(uri);
-	String conPath = request.getContextPath();
-	System.out.println(conPath);
-	String com = uri.substring(conPath.length());
-	System.out.println(com);
-		
-	/*회원 관련 */
-	//회원가입 화면으로 이동 
-	if(com.equals("/MemberJoin.do")) {
-		viewPage = "/member/MemberForm.jsp";
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doAction(request, response);
 	}
-	// 회원가입 처리
-	else if(com.equals("/MemberForm.do")) {
-		command = new MemberFormCommand(); 
-		command.execute(request, response);
-		viewPage = "/MemberResultForm.jsp";
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doAction(request, response);
 	}
-	
-	RequestDispatcher dispatcher = request.getRequestDispatcher("member/"+viewPage);
-	dispatcher.forward(request, response);
-	
-}
+
+	protected void doAction(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		MemberCommand command = null;
+
+		request.setCharacterEncoding("UTF-8");
+		String viewPage = null;
+		String uri = request.getRequestURI();
+		System.out.println(uri);
+		String conPath = request.getContextPath();
+		System.out.println(conPath);
+		String com = uri.substring(conPath.length());
+		System.out.println(com);
+
+		/* 회원 관련 */
+		// 회원가입 화면으로 이동
+		if (com.equals("/member/MemberJoin.do")) {
+			viewPage = "/member/MemberForm.jsp";
+		}
+		// 회원가입 처리
+		else if (com.equals("/member/MemberForm.do")) {
+			command = new MemberFormCommand();
+			command.execute(request, response);
+			viewPage = "/member/MemberResultForm.jsp";
+		}
+		else if (com.equals("/member/MemberIdCheck.do")) {
+			command = new MemberIdCheckCommand();
+			command.execute(request, response);	
+			viewPage = "/member/MemberJoin.do";
+		}
+
+		//RequestDispatcher dispatcher = request.getRequestDispatcher( "member/" +viewPage);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
+
+	}
 }

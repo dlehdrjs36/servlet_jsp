@@ -3,7 +3,8 @@
  */
         function checkValue()
         {
-            var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
+            var idReg = /^[a-zA-Z]+[a-zA-Z0-9]{5,19}$/g;
+            
             if(!document.userInfo.id.value){
                 alert("아이디를 입력하세요.");
                 return false;
@@ -21,6 +22,11 @@
 
             if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
                 alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+            
+            if(!document.userInfo.email.value ){
+                alert("이메일을 입력하세요.");
                 return false;
             }
             
