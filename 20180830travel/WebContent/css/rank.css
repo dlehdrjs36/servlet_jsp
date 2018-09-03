@@ -1,0 +1,35 @@
+﻿<style>
+#rank a {
+    color: black; /*글자색*/
+    text-decoration: none;
+}
+
+#rank a:hover { /*검색어 마우스 올릴시 밑줄 언더라인*/
+    text-decoration: underline;
+}
+
+#rank { /*구역 부분 위치조정*/
+    overflow: hidden;
+    width: 160px;
+    height: 30px; 
+    margin: 0;
+}
+
+#rank ul {
+    position: relative;
+    margin: 0;
+}
+
+#rank ol { /* 글자 위치 부분 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;    
+}
+#rank li { /* 순위 문장 사이의 거리 */
+    height: 35px;
+    line-height: 35px;
+}
+</style>
